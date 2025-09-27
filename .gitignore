@@ -1,0 +1,33 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build output
+dist/
+build/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# environment variables
+.env
+.env.local
+.env.*.local
+
+# editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# system files
+.DS_Store
+Thumbs.db
+
+# testing
+coverage/

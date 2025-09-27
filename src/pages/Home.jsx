@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { FaUsers } from "react-icons/fa";
 
 export default function Home() {
   const quotes = [
@@ -49,7 +50,7 @@ export default function Home() {
       <section className="relative w-full h-[50vh] md:h-[60vh] bg-cover bg-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(src/assets/bg.jpg)` }}
+          style={{ backgroundImage: `url(https://www.arabian-adventures.com/on/demandware.static/-/Sites-dnata-UAE-Library/default/dw153f308b/images/blogs/1700x1280_Sheikh_Zayed_Abu_Dhabi_Grand_Mosque_1-min.jpg)` }}
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.h1
@@ -73,12 +74,12 @@ export default function Home() {
             {[
               {
                 name: 'مولانا محمد ذکریا کاندھلوی',
-                image: 'src/assets/person1.jpg',
+                image: 'src/assets/logo.avif',
                 desc: 'شیخ الحدیث مولانا محمد ذکریا کاندھلوی (رحمۃ اللہ) عالمی شہرت یافتہ عالم اور روحانی رہنما تھے۔',
               },
               {
                 name: 'مفتی سید مختار الدین شاہ',
-                image: 'src/assets/person2.jpg',
+                image: 'src/assets/logo.avif',
                 desc: 'حضرت مفتی سید مختار الدین شاہ ایک ممتاز اسلامی اسکالر اور شیخ الحدیث تھے۔',
               },
             ].map((person, idx) => (

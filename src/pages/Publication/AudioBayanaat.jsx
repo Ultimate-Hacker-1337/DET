@@ -103,26 +103,27 @@ export default function AudioBayanaat() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
-      <div className="max-w-6xl mx-auto text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+    <div className="bg-gray-50 min-h-screen py-10 px-3 sm:px-6 lg:px-12">
+      <div className="max-w-6xl mx-auto text-center mb-8">
+        <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-2">
           میڈیا بپ
         </h2>
-        <p className="text-xl text-green-700 font-semibold border-b-2 border-yellow-400 inline-block pb-1">
+        <p className="text-lg md:text-xl text-green-700 font-semibold border-b-2 border-yellow-400 inline-block pb-1">
           آڈیو بیانات
         </p>
       </div>
 
       {/* Language Tabs */}
-      <div className="flex justify-center flex-wrap gap-2 mb-8">
+      <div className="flex justify-center flex-wrap gap-2 mb-6">
         {languages.map((lang) => (
           <button
             key={lang}
             onClick={() => setActiveLang(lang)}
-            className={`px-5 py-2 rounded-full transition font-medium ${activeLang === lang
+            className={`px-4 py-2 rounded-full text-sm md:text-base transition font-medium ${
+              activeLang === lang
                 ? "bg-green-700 text-white shadow"
                 : "bg-white text-green-700 border border-green-700 hover:bg-green-50"
-              }`}
+            }`}
           >
             {lang.toUpperCase()}
           </button>
@@ -130,19 +131,19 @@ export default function AudioBayanaat() {
       </div>
 
       {/* Search + Sort */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-6">
         <div className="relative w-full md:w-1/2">
           <input
             type="text"
             placeholder="🔍 تلاش کریں (عنوان یا مقرر)"
-            className="w-full border rounded-lg py-2 px-4 pl-10 shadow-sm focus:ring-green-600 focus:border-green-600"
+            className="w-full border rounded-lg py-2 px-4 pl-10 text-sm md:text-base shadow-sm focus:ring-green-600 focus:border-green-600"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
           <Search className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
         </div>
         <select
-          className="border rounded-lg py-2 px-3 shadow-sm focus:ring-green-600 focus:border-green-600"
+          className="border rounded-lg py-2 px-3 text-sm md:text-base shadow-sm focus:ring-green-600 focus:border-green-600"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
@@ -151,10 +152,10 @@ export default function AudioBayanaat() {
         </select>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto bg-white shadow rounded-xl">
+      {/* Table for desktop, cards for mobile */}
+      <div className="hidden md:block overflow-x-auto bg-white shadow rounded-xl">
         <table className="w-full text-right border-collapse">
-          <thead className="bg-green-700 text-white">
+          <thead className="bg-green-700 text-white text-sm md:text-base">
             <tr>
               <th className="p-3">نمبر</th>
               <th className="p-3">عنوان</th>
@@ -169,13 +170,13 @@ export default function AudioBayanaat() {
             {filtered.map((b, idx) => (
               <motion.tr
                 key={b.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: idx * 0.1 }}
-                className="border-b hover:bg-gray-50"
+                transition={{ duration: 0.3, delay: idx * 0.05 }}
+                className="border-b hover:bg-gray-50 text-sm md:text-base"
               >
                 <td className="p-3">{idx + 1}</td>
-                <td className="p-3 font-medium">{b.title}</td>
+                <td className="p-3 font-medium break-words">{b.title}</td>
                 <td className="p-3 text-gray-600">{b.scholar}</td>
                 <td className="p-3 text-gray-500">
                   {new Date(b.date).toLocaleDateString("en-US", {
@@ -191,18 +192,18 @@ export default function AudioBayanaat() {
                     className="bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition"
                   >
                     {currentAudio?.id === b.id && isPlaying ? (
-                      <Pause size={18} />
+                      <Pause size={16} />
                     ) : (
-                      <Play size={18} />
+                      <Play size={16} />
                     )}
                   </button>
                 </td>
                 <td className="p-3 flex gap-2">
                   <button className="bg-green-600 text-white p-2 rounded-md hover:bg-green-700 transition">
-                    <Save size={18} />
+                    <Save size={16} />
                   </button>
                   <button className="bg-gray-600 text-white p-2 rounded-md hover:bg-gray-700 transition">
-                    <Download size={18} />
+                    <Download size={16} />
                   </button>
                 </td>
               </motion.tr>
@@ -211,22 +212,67 @@ export default function AudioBayanaat() {
         </table>
       </div>
 
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-4">
+        {filtered.map((b, idx) => (
+          <motion.div
+            key={b.id}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: idx * 0.05 }}
+            className="bg-white p-4 rounded-xl shadow border"
+          >
+            <h4 className="font-semibold text-base break-words">{b.title}</h4>
+            <p className="text-sm text-gray-600">{b.scholar}</p>
+            <p className="text-xs text-gray-500">
+              {new Date(b.date).toLocaleDateString("en-US")} • {b.duration}
+            </p>
+            <div className="flex gap-2 mt-3">
+              <button
+                onClick={() => handlePlay(b)}
+                className="flex-1 bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition flex items-center justify-center gap-1"
+              >
+                {currentAudio?.id === b.id && isPlaying ? (
+                  <>
+                    <Pause size={16} /> Pause
+                  </>
+                ) : (
+                  <>
+                    <Play size={16} /> Play
+                  </>
+                )}
+              </button>
+              <button className="bg-green-600 text-white p-2 rounded-md hover:bg-green-700 transition">
+                <Save size={16} />
+              </button>
+              <button className="bg-gray-600 text-white p-2 rounded-md hover:bg-gray-700 transition">
+                <Download size={16} />
+              </button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
       {/* Floating Audio Player */}
       {currentAudio && (
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white shadow-xl rounded-full px-6 py-3 flex items-center gap-4 w-[90%] md:w-[600px] border"
+          className="fixed bottom-3 left-1/2 transform -translate-x-1/2 bg-white shadow-lg rounded-2xl px-4 py-3 flex items-center gap-3 w-[95%] sm:w-[80%] md:w-[600px] border"
         >
-          <div className="flex-1">
-            <h4 className="font-semibold">{currentAudio.title}</h4>
-            <p className="text-sm text-gray-500">{currentAudio.scholar}</p>
+          <div className="flex-1 min-w-0">
+            <h4 className="font-semibold text-sm md:text-base truncate">
+              {currentAudio.title}
+            </h4>
+            <p className="text-xs md:text-sm text-gray-500 truncate">
+              {currentAudio.scholar}
+            </p>
           </div>
           <button
             onClick={() => handlePlay(currentAudio)}
-            className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white p-2 md:p-3 rounded-full hover:bg-blue-700 transition"
           >
-            {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+            {isPlaying ? <Pause size={18} /> : <Play size={18} />}
           </button>
           <button
             onClick={() => {
@@ -234,11 +280,15 @@ export default function AudioBayanaat() {
               setCurrentAudio(null);
               setIsPlaying(false);
             }}
-            className="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition"
+            className="bg-red-500 text-white p-2 md:p-3 rounded-full hover:bg-red-600 transition"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
-          <audio ref={audioRef} src={currentAudio.url} onEnded={() => setIsPlaying(false)} />
+          <audio
+            ref={audioRef}
+            src={currentAudio.url}
+            onEnded={() => setIsPlaying(false)}
+          />
         </motion.div>
       )}
     </div>

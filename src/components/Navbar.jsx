@@ -37,17 +37,8 @@ export default function Header() {
         { title: "حفظِ قرآن", path: "/hifz-quran" },
         { title: "تجوید و قراءت", path: "/tajweed-qiraat" },
         { title: "داخلے", path: "/admissions" },
-        { title: "تعلیمی کیلنڈر", path: "/academic-calendar" },
       ],
-    },
-    {
-      title: "رابطہ",
-      path: "/contact",
-      sub: [
-        { title: "پتہ", path: "/contact/address" },
-        { title: "آن لائن فارم", path: "/contact/form" },
-      ],
-    },
+    }
   ];
 
   return (

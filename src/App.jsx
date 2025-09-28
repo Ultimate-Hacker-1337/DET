@@ -9,7 +9,6 @@ import Intro from "./pages/Introduce/Intro";
 import HistoryPage from "./pages/Introduce/History";
 import Goals from "./components/Goals";
 import Campuses from "./components/Campuses";
-import Introduction from "./pages/Introduction";
 import ChishtHistoryPage from "./pages/Introduce/ChishtHistory";
 import AudioBayanaat from "./pages/Publication/AudioBayanaat";
 import VideoBayanaat from "./pages/Publication/VideoBayanaat";
@@ -39,7 +38,6 @@ function App() {
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/goals" element={<Goals />} />
             <Route path="/campuses" element={<Campuses />} />
-            <Route path="/introduction" element={<Introduction />} />
             <Route path="/chishthistory" element={<ChishtHistoryPage />} />
             <Route path="/audiobayanaat" element={<AudioBayanaat />} />
             <Route path="/videobayanaat" element={<VideoBayanaat />} />

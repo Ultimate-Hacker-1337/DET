@@ -20,12 +20,12 @@ export default function Home() {
   ];
 
   const features = [
-    { icon: "📚", title: "دارالافتاء", desc: "آپ کے مسائل اور ان کا حل" },
-    { icon: "✸", title: "تعارف دار الایمان والتقویٰ", desc: "جامعہ اور اس کی خدمات ایک نظر میں" },
-    { icon: "🕌", title: "بانی جامعہ حضرت بنوری رحمہ اللہ", desc: "تعارف، علمی و تحقیقی خدمات" },
-    { icon: "📝", title: "رابطہ", desc: "برائے معلومات" },
-    { icon: "📖", title: "کتابیں", desc: "مفید علمی و اصلاحی کتب" },
-    { icon: "🕋", title: "ماہنامہ بینات", desc: "قرآن و سنت پر مبنی تعلیمات کا علمبردار" },
+    { icon: "📚", title: "دارالافتاء", desc: "آپ کے مسائل اور ان کا حل", route: "/darulifta" },
+    { icon: "✸", title: "تعارف دار الایمان والتقویٰ", desc: "جامعہ اور اس کی خدمات ایک نظر میں", route: "/introduction" },
+    { icon: "🕌", title: "بانی جامعہ حضرت بنوری رحمہ اللہ", desc: "تعارف، علمی و تحقیقی خدمات", route: "/chishthistory" },
+    { icon: "📝", title: "رابطہ", desc: "برائے معلومات", route: "/contact" },
+    { icon: "📖", title: "کتابیں", desc: "مفید علمی و اصلاحی کتب", route: "/books" },
+    { icon: "🕋", title: "ماہنامہ بینات", desc: "قرآن و سنت پر مبنی تعلیمات کا علمبردار", route: "/audiobayanaat" },
   ];
 
   const audios = [
@@ -142,7 +142,9 @@ export default function Home() {
           <div className="text-center mt-10">
             <motion.button className="px-6 py-3 bg-[#c69c6d] text-white rounded-lg shadow-md"
               whileHover={{ scale: 1.05, backgroundColor: '#a77f4e' }}
-              whileTap={{ scale: 0.95 }}>
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/malfoozat")}
+            >
               تمام ملفوظات پڑھیں
             </motion.button>
           </div>
@@ -183,6 +185,7 @@ export default function Home() {
               className="px-6 py-3 bg-[#c69c6d] text-white rounded-lg shadow-md"
               whileHover={{ scale: 1.05, backgroundColor: '#a77f4e' }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/audiobayanaat")}
             >
               تمام آڈیو بیانات سنیں
             </motion.button>
@@ -196,8 +199,10 @@ export default function Home() {
           <div className="w-32 h-1 bg-[#c69c6d] mx-auto mb-10 rounded-full"></div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {features.map((f, i) => (
-              <motion.div key={i} className="relative flex items-center bg-white border border-[#e8d5c4] shadow-md rounded-xl p-6 group"
-                variants={cardVariants} initial="hidden" whileInView="visible" whileHover="hover" viewport={{ once: true }}>
+              <motion.div key={i} className="relative flex items-center bg-white border border-[#e8d5c4] shadow-md rounded-xl p-6 group cursor-pointer"
+                variants={cardVariants} initial="hidden" whileInView="visible" whileHover="hover" viewport={{ once: true }}
+                onClick={() => f.route && navigate(f.route)}
+              >
                 <motion.div className="absolute left-0 top-0 bottom-0 w-0 h-full rounded-r-full bg-[#c69c6d]/70"
                   initial={{ width: 0 }} whileHover={{ width: "200%" }} transition={{ duration: 0.6, ease: "easeInOut" }} />
                 <div className="relative z-10 flex items-center">
@@ -232,7 +237,9 @@ export default function Home() {
           <div className="text-center mt-10">
             <motion.button className="px-6 py-3 bg-[#c69c6d] text-white rounded-lg shadow-md"
               whileHover={{ scale: 1.05, backgroundColor: '#a77f4e' }}
-              whileTap={{ scale: 0.95 }}>
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/books")}
+            >
               مزید فتاویٰ دیکھیں
             </motion.button>
           </div>

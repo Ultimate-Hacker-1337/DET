@@ -7,7 +7,6 @@ import Darulifta from "./pages/Darulifta";
 import Contact from "./pages/Contact";
 import Intro from "./pages/Introduce/Intro";
 import HistoryPage from "./pages/Introduce/History";
-import Campuses from "./components/Campuses";
 import ChishtHistoryPage from "./pages/Introduce/ChishtHistory";
 import AudioBayanaat from "./pages/Publication/AudioBayanaat";
 import VideoBayanaat from "./pages/Publication/VideoBayanaat";
@@ -35,7 +34,6 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/intro" element={<Intro />} />
             <Route path="/history" element={<HistoryPage />} />
-            <Route path="/campuses" element={<Campuses />} />
             <Route path="/chishthistory" element={<ChishtHistoryPage />} />
             <Route path="/audiobayanaat" element={<AudioBayanaat />} />
             <Route path="/videobayanaat" element={<VideoBayanaat />} />

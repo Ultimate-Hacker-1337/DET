@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { FaUsers } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
   const quotes = [
     {
       text: "صبر ایک درخت ہے جس کی جڑیں کڑوی ہوتی ہیں، لیکن پھل میٹھا ہوتا ہے۔",
@@ -98,9 +100,12 @@ export default function Home() {
           <div className="bg-[#f9f1e8] rounded-2xl shadow-md p-8 text-center border border-[#e8d5c4]">
             <h2 className="text-3xl font-bold mb-4 text-[#4a2f1b]">تحریک ایمان و تقویٰ کا تعارف</h2>
             <p className="text-[#2d1a10] mb-6">قرآن و سنت کی لازوال تعلیمات کو منظم نصاب کے ذریعے پھیلانا اور روحانی ترقی کی کمیونٹی بنانا۔</p>
-            <motion.button className="px-6 py-3 bg-[#c69c6d] text-white rounded-lg shadow-md"
+            <motion.button
+              className="px-6 py-3 bg-[#c69c6d] text-white rounded-lg shadow-md"
               whileHover={{ scale: 1.05, backgroundColor: '#a77f4e' }}
-              whileTap={{ scale: 0.95 }}>
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/intro")}
+            >
               مزید جانیں
             </motion.button>
           </div>

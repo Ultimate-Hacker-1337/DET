@@ -5,11 +5,22 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Darulifta from "./pages/Darulifta";
 import Contact from "./pages/Contact";
-import Intro from "./pages/Intro";
-import HistoryPage from "./pages/History";
+import Intro from "./pages/Introduce/Intro";
+import HistoryPage from "./pages/Introduce/History";
 import Goals from "./components/Goals";
 import Campuses from "./components/Campuses";
 import Introduction from "./pages/Introduction";
+import ChishtHistoryPage from "./pages/Introduce/ChishtHistory";
+import AudioBayanaat from "./pages/Publication/AudioBayanaat";
+import VideoBayanaat from "./pages/Publication/VideoBayanaat";
+import HamdoNaat from "./pages/Publication/HamdoNaat";
+import Poetry from "./pages/Publication/Poetry";
+import Books from "./pages/Publication/Books";
+import Malfoozat from "./pages/Publication/Malfoozat";
+import DarseNizami from "./pages/Education/DarseNizami";
+import HifzeQuran from "./pages/Education/HifzeQuran";
+import Tajweed from "./pages/Education/Tajweed";
+import Admission from "./pages/Education/Admission";
 
 function App() {
   return (
@@ -29,6 +40,17 @@ function App() {
             <Route path="/goals" element={<Goals />} />
             <Route path="/campuses" element={<Campuses />} />
             <Route path="/introduction" element={<Introduction />} />
+            <Route path="/chishthistory" element={<ChishtHistoryPage />} />
+            <Route path="/audiobayanaat" element={<AudioBayanaat />} />
+            <Route path="/videobayanaat" element={<VideoBayanaat />} />
+            <Route path="/hamdonaat" element={<HamdoNaat />} />
+            <Route path="/poetry" element={<Poetry />} />
+            <Route path="/malfoozat" element={<Malfoozat />} />
+            <Route path="/books" element={<Books />} />
+            <Route path="/darse-nizami" element={<DarseNizami />} />
+            <Route path="/hifz-quran" element={<HifzeQuran />} />
+            <Route path="/tajweed-qiraat" element={<Tajweed />} />
+            <Route path="/admissions" element={<Admission />} />
           </Routes>
         </main>
 

@@ -9,11 +9,11 @@ export default function Header() {
   const navItems = [
     {
       title: "تعارف",
-      path: "/about",
+      path: "/introduction",
       sub: [
         { title: "تاریخچہ", path: "/history" },
         { title: "مقاصد", path: "/goals" },
-        { title: "انتظامیہ", path: "/about/admin" },
+        { title: "مراکز", path: "/campuses" },
       ],
     },
     {

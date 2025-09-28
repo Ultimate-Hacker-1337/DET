@@ -22,10 +22,10 @@ export default function History() {
     ];
 
     return (
-        <div className="bg-gradient-to-b from-emerald-50 via-white to-yellow-50 py-16 px-6">
+        <div className="bg-gradient-to-t from-emerald-50 via-white to-yellow-50 py-16 px-6">
             {/* Section Header */}
             <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-emerald-800">
+                <h2 className="text-3xl md:text-5xl font-extrabold text-emerald-800 pb-6">
                     تحریک ایمان و تقویٰ
                 </h2>
                 <h3 className="text-2xl md:text-3xl font-bold text-slate-900 relative inline-block mt-4">

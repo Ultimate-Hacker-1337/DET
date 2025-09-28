@@ -11,8 +11,8 @@ export default function Header() {
       title: "تعارف",
       path: "/about",
       sub: [
-        { title: "تاریخچہ", path: "/about/history" },
-        { title: "مقاصد", path: "/about/goals" },
+        { title: "تاریخچہ", path: "/history" },
+        { title: "مقاصد", path: "/goals" },
         { title: "انتظامیہ", path: "/about/admin" },
       ],
     },

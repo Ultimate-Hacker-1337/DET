@@ -3,10 +3,11 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
-import About from "./pages/About";
 import Darulifta from "./pages/Darulifta";
 import Contact from "./pages/Contact";
 import Intro from "./pages/Intro";
+import HistoryPage from "./pages/History";
+import Goals from "./components/Goals";
 
 function App() {
   return (
@@ -19,10 +20,11 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/intro" element={<Intro />} />
             <Route path="/darulifta" element={<Darulifta />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/intro" element={<Intro />} />
+            <Route path="/history" element={<HistoryPage />} />
+            <Route path="/goals" element={<Goals />} />
           </Routes>
         </main>
 

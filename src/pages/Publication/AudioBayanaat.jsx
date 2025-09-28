@@ -379,9 +379,11 @@ export default function AudioBayanaat() {
     { id: 50, title: "Islamic Lecture - Part 7", scholar: "Shaykh Usman Qureshi", date: "2025-08-10", duration: "21:50", lang: "english", url: "/audio/bayan50.mp3" }
   ];
 
+  // const activeLang = "urdu"; 
+
 
   const filtered = bayanat
-    .filter((b) => b.lang === activeLang)
+    .filter((b) => b.lang === activeLang) 
     .filter(
       (b) =>
         b.title.toLowerCase().includes(search.toLowerCase()) ||

@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import logoImg from "../assets/logo.avif";
 import audio1 from "../assets/audio.mp3";
-import audio2 from "../assets/audio2.mp3";
+import bg3 from "../assets/bg3.jpg";
+import { FaUser } from "react-icons/fa";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -15,10 +16,8 @@ export default function Home() {
   ];
 
   const features = [
-    { icon: "📚", title: "دارالافتاء", desc: "آپ کے مسائل اور ان کا حل", route: "/darulifta" },
-    { icon: "✸", title: "تعارف دار الایمان والتقویٰ", desc: "جامعہ اور اس کی خدمات ایک نظر میں", route: "/introduction" },
-    { icon: "🕌", title: "بانی جامعہ حضرت بنوری رحمہ اللہ", desc: "تعارف، علمی و تحقیقی خدمات", route: "/chishthistory" },
-    { icon: "📝", title: "رابطہ", desc: "برائے معلومات", route: "/contact" },
+    { icon: "✸", title: "تعارف دار الایمان والتقویٰ", desc: "جامعہ اور اس کی خدمات ایک نظر میں", route: "/intro" },
+    { icon: "🕌", title: "مفتی سید مختار الدین شاہ", desc: "تعارف، علمی و تحقیقی خدمات", route: "/chishthistory" },
     { icon: "📖", title: "کتابیں", desc: "مفید علمی و اصلاحی کتب", route: "/books" },
     { icon: "🕋", title: "ماہنامہ بینات", desc: "قرآن و سنت پر مبنی تعلیمات کا علمبردار", route: "/audiobayanaat" },
   ];
@@ -48,8 +47,7 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage:
-              "url(https://www.arabian-adventures.com/on/demandware.static/-/Sites-dnata-UAE-Library/default/dw153f308b/images/blogs/1700x1280_Sheikh_Zayed_Abu_Dhabi_Grand_Mosque_1-min.jpg)",
+            backgroundImage: `url(${bg3})`,
           }}
         />
         <div className="absolute inset-0 flex items-center justify-center bg-black/30">
@@ -87,7 +85,7 @@ export default function Home() {
               {
                 name: "مفتی سید مختار الدین شاہ",
                 image: logoImg,
-                desc: "حضرت مفتی سید مختار الدین شاہ ایک ممتاز اسلامی اسکالر اور شیخ الحدیث تھے۔",
+                desc: "حضرت مفتی سید مختار الدین شاہ ایک ممتاز اسلامی اسکالر اور شیخ الحدیث ہیں۔",
               },
             ].map((person, idx) => (
               <motion.div
@@ -99,41 +97,15 @@ export default function Home() {
                 whileHover="hover"
                 viewport={{ once: true }}
               >
-                <img
-                  src={person.image}
-                  alt={person.name}
-                  className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-[#d8bfa6]"
-                />
+                <div className="w-32 h-32 mx-auto flex items-center justify-center rounded-full bg-[#f5e6d3] border-4 border-[#d8bfa6]">
+                  <FaUser className="text-[#4a2f1b] text-5xl" />
+                </div>
                 <h3 className="mt-4 text-xl font-semibold text-[#4a2f1b]">{person.name}</h3>
                 <p className="mt-3 text-[#2d1a10]">{person.desc}</p>
               </motion.div>
             ))}
           </div>
-        </motion.section>
-
-        {/* تحریک ایمان و تقویٰ */}
-        <motion.section
-          className="py-16 md:py-20"
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <div className="bg-[#fefaf7] rounded-2xl shadow-lg p-8 text-center border border-[#e8d5c4]">
-            <h2 className="text-3xl font-bold mb-4 text-[#4a2f1b]">تحریک ایمان و تقویٰ کا تعارف</h2>
-            <p className="text-[#2d1a10] mb-6">
-              قرآن و سنت کی لازوال تعلیمات کو منظم نصاب کے ذریعے پھیلانا اور روحانی ترقی کی کمیونٹی بنانا。
-            </p>
-            <motion.button
-              className="px-6 py-3 bg-gradient-to-r from-[#c69c6d] to-[#a77f4e] text-white rounded-lg shadow-md"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate("/intro")}
-            >
-              مزید جانیں
-            </motion.button>
-          </div>
-        </motion.section>
+        </motion.section> 
 
         {/* اس ہفتے کی مجلس */}
         <section className="w-full flex flex-col items-center justify-center py-8 bg-[#fdfaf5]">
@@ -244,7 +216,7 @@ export default function Home() {
             اہم موضوعات
           </h2>
           <div className="w-32 h-1 bg-[#c69c6d] mx-auto mb-10 rounded-full"></div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
             {features.map((f, i) => (
               <motion.div
                 key={i}

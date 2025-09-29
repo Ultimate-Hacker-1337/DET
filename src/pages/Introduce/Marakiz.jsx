@@ -227,7 +227,7 @@ export default function Marakiz() {
             </main>
 
             {/* Modal */}
-            {selected && (
+            {/* {selected && (
                 <div
                     role="dialog"
                     aria-modal="true"
@@ -272,7 +272,6 @@ export default function Marakiz() {
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-4 p-4">
-                            {/* Gallery */}
                             <div className="flex flex-col gap-3">
                                 <div className="relative h-64 rounded-lg overflow-hidden bg-gray-100">
                                     <img
@@ -294,8 +293,8 @@ export default function Marakiz() {
                                             key={img}
                                             onClick={() => setActiveImage(idx)}
                                             className={`flex-shrink-0 w-20 h-14 rounded-md overflow-hidden border ${idx === activeImage
-                                                    ? "border-emerald-600"
-                                                    : "border-gray-200"
+                                                ? "border-emerald-600"
+                                                : "border-gray-200"
                                                 }`}
                                         >
                                             <img
@@ -308,7 +307,6 @@ export default function Marakiz() {
                                 </div>
                             </div>
 
-                            {/* Map + Info */}
                             <div className="flex flex-col gap-3">
                                 <div className="rounded-lg overflow-hidden h-64 border border-gray-200">
                                     <iframe
@@ -391,207 +389,131 @@ export default function Marakiz() {
                         </div>
                     </motion.div>
                 </div>
+            )} */}
+
+            {selected && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={`${selected.city} تفصیلات`}
+                    tabIndex={-1}
+                    ref={dialogRef}
+                    className="fixed inset-0 z-50 flex items-center justify-center sm:p-4"
+                >
+                    {/* Overlay */}
+                    <div
+                        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+                        onClick={() => setSelected(null)}
+                    />
+
+                    <motion.div
+                        initial={{ y: 50, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 50, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="relative w-full h-full sm:h-auto sm:max-w-4xl bg-white rounded-none sm:rounded-2xl shadow-2xl flex flex-col"
+                    >
+                        {/* Header */}
+                        <div className="flex items-center justify-between p-4 border-b border-gray-100">
+                            <div>
+                                <h3 className="text-lg font-bold text-slate-900">{selected.city}</h3>
+                                <p className="text-sm text-slate-600">{selected.region}</p>
+                            </div>
+                            <button
+                                onClick={() => setSelected(null)}
+                                aria-label="بند کریں"
+                                className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+                            >
+                                <X className="w-5 h-5 text-slate-600" />
+                            </button>
+                        </div>
+
+                        {/* Scrollable Body */}
+                        <div className="flex-1 overflow-y-auto p-4 space-y-6">
+                            {/* Gallery */}
+                            <div className="flex flex-col gap-3">
+                                <div className="relative h-56 sm:h-64 rounded-lg overflow-hidden bg-gray-100">
+                                    <img
+                                        src={
+                                            selected.images?.[activeImage] ||
+                                            "src/assets/placeholder-campus.jpg"
+                                        }
+                                        alt={`${selected.city} image ${activeImage + 1}`}
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute left-3 top-3 text-xs bg-white/80 px-2 py-1 rounded">
+                                        {activeImage + 1} / {selected.images?.length || 1}
+                                    </div>
+                                </div>
+
+                                <div className="flex gap-2 overflow-x-auto pb-2">
+                                    {(selected.images || []).map((img, idx) => (
+                                        <button
+                                            key={img}
+                                            onClick={() => setActiveImage(idx)}
+                                            className={`flex-shrink-0 w-20 h-14 rounded-md overflow-hidden border ${idx === activeImage ? "border-emerald-600" : "border-gray-200"
+                                                }`}
+                                        >
+                                            <img
+                                                src={img}
+                                                alt={`thumb ${idx + 1}`}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Map */}
+                            <div className="rounded-lg overflow-hidden h-56 sm:h-64 border border-gray-200">
+                                <iframe
+                                    title={`${selected.city} map`}
+                                    src={googleMapsSrc(selected.coords.lat, selected.coords.lng, 14)}
+                                    className="w-full h-full border-0"
+                                    loading="lazy"
+                                />
+                            </div>
+
+                            {/* Info */}
+                            <div className="space-y-2 text-sm text-slate-700">
+                                <div className="flex items-center gap-2">
+                                    <MapPin className="w-4 h-4 text-slate-500" />
+                                    <span>{selected.coords.lat}, {selected.coords.lng}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Phone className="w-4 h-4 text-slate-500" />
+                                    <span>{selected.phone}</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Clock className="w-4 h-4 text-slate-500" />
+                                    <span>{selected.hours}</span>
+                                </div>
+                                <p className="mt-3 leading-6">{selected.blurb}</p>
+                            </div>
+                        </div>
+
+                        {/* Fixed Footer (Mobile Friendly Actions) */}
+                        <div className="p-4 border-t border-gray-100 flex gap-3">
+                            <button
+                                onClick={() =>
+                                    openDirections(selected.coords.lat, selected.coords.lng)
+                                }
+                                className="flex-1 px-4 py-3 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700"
+                            >
+                                راستہ
+                            </button>
+                            <a
+                                href={`tel:${selected.phone}`}
+                                className="flex-1 px-4 py-3 rounded-lg border border-gray-200 text-center font-semibold hover:bg-gray-50"
+                            >
+                                کال کریں
+                            </a>
+                        </div>
+                    </motion.div>
+                </div>
             )}
+
+
         </div>
     );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // src/pages/Goals.jsx
-// import React from "react";
-// import { motion } from "framer-motion";
-// import { useInView } from "react-intersection-observer";
-// import {
-//   BookOpen,
-//   HeartHandshake,
-//   Sprout,
-//   GraduationCap,
-//   HandHeart,
-//   Scale,
-//   BookMarked,
-//   HeartPulse,
-//   Users,
-// } from "lucide-react";
-
-// export default function Maqasid() {
-//   const goals = [
-//     {
-//       icon: <HeartHandshake className="w-12 h-12 text-blue-600" />,
-//       title: "اخلاقی اقدار",
-//       desc: "اسلامی اخلاق و اقدار کو معاشرتی زندگی میں زندہ کرنا اور کردار سازی کو فروغ دینا۔",
-//     },
-//     {
-//       icon: <Sprout className="w-12 h-12 text-green-600" />,
-//       title: "روحانی ترقی",
-//       desc: "تزکیہ نفس اور روحانی تربیت کے ذریعے انسان کے باطن کو سنوارنا اور اللہ سے تعلق کو مضبوط کرنا۔",
-//     },
-//     {
-//       icon: <BookOpen className="w-12 h-12 text-orange-500" />,
-//       title: "تعلیمات اسلام کا فروغ",
-//       desc: "قرآن و سنت کی تعلیمات کو عام کرنا اور جدید انداز میں دینی علم کی ترویج کرنا۔",
-//     },
-//     {
-//       icon: <HandHeart className="w-12 h-12 text-pink-500" />,
-//       title: "خدمت انسانیت",
-//       desc: "فلاحی منصوبوں کے ذریعے انسانیت کی خدمت کرنا اور غرباء و مستحقین کی مدد کرنا۔",
-//     },
-//     {
-//       icon: <GraduationCap className="w-12 h-12 text-purple-600" />,
-//       title: "روحانی تربیت",
-//       desc: "علماء، طلباء اور عام مسلمانوں کی دینی و روحانی تربیت کے مواقع فراہم کرنا۔",
-//     },
-//   ];
-
-//   const basicPoints = [
-//     {
-//       icon: <HeartPulse className="w-12 h-12 text-red-500" />,
-//       title: "تزکیہ و احسان",
-//       desc: "نفس کی پاکیزگی اور روحانی ترقی کو ہر مسلمان کے لیے لازم قرار دیا گیا ہے تاکہ دل اللہ کی محبت سے معمور ہو جائے۔",
-//     },
-//     {
-//       icon: <BookMarked className="w-12 h-12 text-blue-600" />,
-//       title: "قرآن و سنت پر عمل",
-//       desc: "تحریک کا بنیادی زور قرآن و سنت کی عملی تعلیمات پر ہے تاکہ ہر عمل اسوۂ حسنہ کے مطابق ہو سکے۔",
-//     },
-//     {
-//       icon: <Scale className="w-12 h-12 text-indigo-500" />,
-//       title: "میانہ روی",
-//       desc: "اعتدال اور میانہ روی کو ہر معاملے میں اختیار کیا جاتا ہے تاکہ افراط و تفریط سے بچا جا سکے۔",
-//     },
-//     {
-//       icon: <Users className="w-12 h-12 text-teal-600" />,
-//       title: "خدمت خلق",
-//       desc: "مسلمانوں کی خدمت، انسانیت کی فلاح و بہبود اور حاجات مندوں کی مدد تحریک کے اہم مقاصد میں سے ہے۔",
-//     },
-//   ];
-
-//   return (
-//     <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 py-20 px-6">
-//       {/* Section 1: Goals */}
-//       <div className="text-center mb-16">
-//         <h2 className="text-3xl md:text-5xl font-extrabold text-emerald-800">
-//           تحریک ایمان و تقویٰ
-//         </h2>
-//         <h3 className="text-2xl md:text-3xl font-bold text-slate-900 relative inline-block mt-4">
-//           ہمارے مقاصد
-//           <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></span>
-//         </h3>
-//         <p className="text-slate-600 mt-6 max-w-3xl mx-auto text-lg leading-8">
-//           تحریک ایمان و تقویٰ کا مقصد ایک ایسی مثالی کمیونٹی تشکیل دینا ہے جو اخلاق،
-//           روحانیت، تعلیم اور خدمت کے اصولوں پر استوار ہو۔ ذیل میں ہمارے چند بنیادی
-//           مقاصد درج ہیں۔
-//         </p>
-//       </div>
-
-//       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto mb-24">
-//         {goals.map((goal, index) => {
-//           const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 });
-//           return (
-//             <motion.div
-//               ref={ref}
-//               key={index}
-//               className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 text-center flex flex-col items-center hover:shadow-2xl hover:scale-105 transition-all duration-300"
-//               initial={{ opacity: 0, y: 40 }}
-//               animate={inView ? { opacity: 1, y: 0 } : {}}
-//               transition={{ duration: 0.6, delay: index * 0.15 }}
-//             >
-//               <div className="mb-6 flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-tr from-yellow-100 to-emerald-50">
-//                 {goal.icon}
-//               </div>
-//               <h4 className="text-xl font-bold text-slate-800 mb-3">
-//                 {goal.title}
-//               </h4>
-//               <p className="text-slate-600 leading-7">{goal.desc}</p>
-//             </motion.div>
-//           );
-//         })}
-//       </div>
-
-//       {/* Divider */}
-//       <div className="max-w-5xl mx-auto border-t border-gray-200 mb-16"></div>
-
-//       {/* Section 2: Basic Points */}
-//       <div className="text-center mb-12">
-//         <h3 className="text-2xl md:text-3xl font-bold text-slate-800 relative inline-block">
-//           بنیادی نکات
-//           <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 h-1 bg-yellow-400 rounded-full"></span>
-//         </h3>
-//       </div>
-
-//       <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-//         {basicPoints.map((point, index) => {
-//           const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.15 });
-//           return (
-//             <motion.div
-//               ref={ref}
-//               key={index}
-//               className="bg-white rounded-2xl shadow-md border border-gray-100 p-8 text-center flex flex-col items-center hover:shadow-xl hover:scale-105 transition-all duration-300"
-//               initial={{ opacity: 0, y: 40 }}
-//               animate={inView ? { opacity: 1, y: 0 } : {}}
-//               transition={{ duration: 0.6, delay: index * 0.15 }}
-//             >
-//               <div className="mb-6 flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-tr from-blue-50 to-yellow-50">
-//                 {point.icon}
-//               </div>
-//               <h4 className="text-xl font-bold text-slate-800 mb-3">
-//                 {point.title}
-//               </h4>
-//               <p className="text-slate-600 leading-7">{point.desc}</p>
-//             </motion.div>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   );
-// }

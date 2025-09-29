@@ -47,15 +47,13 @@ export default function Books() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-green-50 to-white min-h-screen py-16 px-4 sm:px-6 lg:px-12">
+    <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
       {/* Section Heading */}
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-800 mb-2">
+      <div className="max-w-6xl mx-auto text-center mb-10">
+        <h3 className="text-3xl md:text-4xl font-extrabold text-emerald-800 relative inline-block">
           کتابیں
-        </h2>
-        <p className="text-xl font-semibold text-green-700">
-          (ڈاؤن لوڈ / آرڈر)
-        </p>
+          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-yellow-400 rounded-full"></span>
+        </h3>
       </div>
 
       {/* Books Grid */}

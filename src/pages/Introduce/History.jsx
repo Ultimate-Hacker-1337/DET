@@ -22,7 +22,7 @@ export default function History() {
     ];
 
     return (
-        <div className="bg-gradient-to-t from-emerald-50 via-white to-yellow-50 py-16 px-6">
+        <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 py-16 px-6">
             {/* Section Header */}
             <div className="text-center mb-16">
                 <h2 className="text-3xl md:text-5xl font-extrabold text-emerald-800 pb-6">

@@ -38,7 +38,7 @@ export default function Malfoozat() {
   ];
 
   return (
-    <section className="bg-gradient-to-t from-green-50 via-white to-green-50 py-20 px-6">
+    <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
       {/* Heading */}
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">
@@ -90,6 +90,6 @@ export default function Malfoozat() {
             </div>
           ))}
       </div>
-    </section>
+    </div>
   );
 }

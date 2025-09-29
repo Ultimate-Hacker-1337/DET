@@ -103,15 +103,14 @@ export default function HamdoNaat() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
-      <div className="max-w-6xl mx-auto text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-          میڈیا بپ
-        </h2>
-        <p className="text-xl text-green-700 font-semibold border-b-2 border-yellow-400 inline-block pb-1">
-          حمد و نعت و کلام
-        </p>
-      </div>
+    <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
+{/* Section Heading */}
+<div className="max-w-6xl mx-auto text-center mb-10">
+  <h3 className="text-3xl md:text-4xl font-extrabold text-emerald-800 relative inline-block">
+    ویڈیو بیانات
+    <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-yellow-400 rounded-full"></span>
+  </h3>
+</div>
 
       {/* Language Tabs */}
       <div className="flex justify-center flex-wrap gap-2 mb-8">

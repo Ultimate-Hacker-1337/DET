@@ -29,7 +29,7 @@ export default function ChishtHistory() {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
+    <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
       <div className="max-w-6xl mx-auto text-center mb-16">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
           تاریخ مشائخ چشت

@@ -63,14 +63,12 @@ export default function Poetry() {
   const filtered = poems.filter((p) => p.lang === activeLang);
 
   return (
-    <div className="bg-gradient-to-b from-green-50 to-white min-h-screen py-16 px-4 sm:px-6 lg:px-12">
+    <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
       <div className="max-w-6xl mx-auto text-center mb-10">
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-          میڈیا بپ
-        </h2>
-        <p className="text-2xl font-semibold text-green-700 border-b-2 border-yellow-400 inline-block pb-1">
+        <h3 className="text-3xl md:text-4xl font-extrabold text-emerald-800 relative inline-block">
           اشعار (تحریری)
-        </p>
+          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-yellow-400 rounded-full"></span>
+        </h3>
       </div>
 
       {/* Language Tabs */}
@@ -79,11 +77,10 @@ export default function Poetry() {
           <button
             key={lang}
             onClick={() => setActiveLang(lang)}
-            className={`px-5 py-2 rounded-full transition font-medium ${
-              activeLang === lang
+            className={`px-5 py-2 rounded-full transition font-medium ${activeLang === lang
                 ? "bg-green-700 text-white shadow"
                 : "bg-white text-green-700 border border-green-700 hover:bg-green-50"
-            }`}
+              }`}
           >
             {lang.toUpperCase()}
           </button>

@@ -3,10 +3,10 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 import Home from "./pages/Home";
-import Darulifta from "./pages/Darulifta";
-import Contact from "./pages/Contact";
 import Intro from "./pages/Introduce/Intro";
 import HistoryPage from "./pages/Introduce/History";
+import Maqasid from "./pages/Introduce/Maqasid";
+import Marakiz from "./pages/Introduce/Marakiz";
 import ChishtHistoryPage from "./pages/Introduce/ChishtHistory";
 import AudioBayanaat from "./pages/Publication/AudioBayanaat";
 import VideoBayanaat from "./pages/Publication/VideoBayanaat";
@@ -30,10 +30,10 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/darulifta" element={<Darulifta />} />
-            <Route path="/contact" element={<Contact />} />
             <Route path="/intro" element={<Intro />} />
             <Route path="/history" element={<HistoryPage />} />
+            <Route path="/goals" element={<Maqasid />} />
+            <Route path="/campuses" element={<Marakiz />} />
             <Route path="/chishthistory" element={<ChishtHistoryPage />} />
             <Route path="/audiobayanaat" element={<AudioBayanaat />} />
             <Route path="/videobayanaat" element={<VideoBayanaat />} />

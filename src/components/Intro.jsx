@@ -3,7 +3,7 @@ import { Eye, Target } from "lucide-react";
 
 export default function IntroSection() {
   return (
-    <section className="bg-[#fdf8f3] min-h-screen flex flex-col items-center py-12 px-6">
+    <section className="min-h-screen flex flex-col items-center bg-gradient-to-t from-yellow-50 via-white to-blue-50 py-12 px-6">
       {/* Heading */}
       <h1 className="text-3xl font-bold text-brown-800 mb-2">
         تحریک ایمان و تقویٰ

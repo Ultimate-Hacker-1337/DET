@@ -125,7 +125,7 @@
 //   }, []);
 
 //   return (
-//     <div className="bg-gradient-to-t from-blue-50 via-white to-yellow-50 py-20 px-6">
+//     <div className="min-h-screen bg-gradient-to-t from-yellow-50 via-white to-blue-50 pb-20 px-6">
 //       {/* Section header */}
 //       <div className="text-center mb-16">
 //         <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">
@@ -519,7 +519,7 @@
 //     }, []);
 
 //     return (
-//         <div className="bg-gradient-to-t from-blue-50 via-white to-yellow-50 py-20 px-6">
+//         <div className="min-h-screen bg-gradient-to-t from-yellow-50 via-white to-blue-50 pb-20 px-6">
 //             {/* Section header */}
 //             <div className="text-center mb-16">
 //                 <h2 className="text-3xl md:text-5xl font-extrabold text-emerald-800 pb-6">
@@ -609,190 +609,4 @@
 //                                                 <span>{c.hours}</span>
 //                                             </span>
 //                                         </div>
-//                                     </div>
-//                                 </div>
-
-//                                 <div className="mt-5 text-xs text-slate-400">
-//                                     رابطہ: {c.contactName}
-//                                 </div>
-//                             </div>
-//                         </motion.article>
-//                     ))}
-
-//                     {filtered.length === 0 && (
-//                         <div className="col-span-full py-20 text-center text-slate-600">
-//                             کوئی مرکز تلاش نہیں ہوا — تلاش کی اصطلاح تبدیل کریں یا تمام مراکز دیکھیں۔
-//                         </div>
-//                     )}
-//                 </section>
-//             </main>
-
-//             {/* Modal */}
-//             {selected && (
-//                 <div
-//                     role="dialog"
-//                     aria-modal="true"
-//                     aria-label={`${selected.city} تفصیلات`}
-//                     tabIndex={-1}
-//                     ref={dialogRef}
-//                     className="fixed inset-0 z-50 flex items-center justify-center p-4"
-//                 >
-//                     <div
-//                         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-//                         onClick={() => setSelected(null)}
-//                     />
-
-//                     <motion.div
-//                         initial={{ scale: 0.95, opacity: 0 }}
-//                         animate={{ scale: 1, opacity: 1 }}
-//                         transition={{ duration: 0.25 }}
-//                         className="relative max-w-4xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden"
-//                     >
-//                         <div className="flex items-center justify-between p-4 border-b border-gray-100">
-//                             <div>
-//                                 <h3 className="text-lg font-bold text-slate-900">
-//                                     {selected.city}
-//                                 </h3>
-//                                 <p className="text-sm text-slate-600">{selected.region}</p>
-//                             </div>
-//                             <div className="flex items-center gap-3">
-//                                 <a
-//                                     href={`tel:${selected.phone}`}
-//                                     className="text-sm inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
-//                                 >
-//                                     <Phone className="w-4 h-4" /> {selected.phone}
-//                                 </a>
-//                                 <button
-//                                     onClick={() => setSelected(null)}
-//                                     aria-label="بند کریں"
-//                                     className="w-10 h-10 rounded-lg bg-gray-50 hover:bg-gray-100 flex items-center justify-center"
-//                                 >
-//                                     <X className="w-5 h-5 text-slate-600" />
-//                                 </button>
-//                             </div>
-//                         </div>
-
-//                         <div className="grid md:grid-cols-2 gap-4 p-4">
-//                             {/* Gallery */}
-//                             <div className="flex flex-col gap-3">
-//                                 <div className="relative h-64 rounded-lg overflow-hidden bg-gray-100">
-//                                     <img
-//                                         src={
-//                                             selected.images?.[activeImage] ||
-//                                             "src/assets/placeholder-campus.jpg"
-//                                         }
-//                                         alt={`${selected.city} image ${activeImage + 1}`}
-//                                         className="w-full h-full object-cover"
-//                                     />
-//                                     <div className="absolute left-3 top-3 text-xs bg-white/80 px-2 py-1 rounded">
-//                                         {activeImage + 1} / {selected.images?.length || 1}
-//                                     </div>
-//                                 </div>
-
-//                                 <div className="flex gap-2 overflow-x-auto">
-//                                     {(selected.images || []).map((img, idx) => (
-//                                         <button
-//                                             key={img}
-//                                             onClick={() => setActiveImage(idx)}
-//                                             className={`flex-shrink-0 w-20 h-14 rounded-md overflow-hidden border ${idx === activeImage
-//                                                     ? "border-emerald-600"
-//                                                     : "border-gray-200"
-//                                                 }`}
-//                                         >
-//                                             <img
-//                                                 src={img}
-//                                                 alt={`thumb ${idx + 1}`}
-//                                                 className="w-full h-full object-cover"
-//                                             />
-//                                         </button>
-//                                     ))}
-//                                 </div>
-//                             </div>
-
-//                             {/* Map + Info */}
-//                             <div className="flex flex-col gap-3">
-//                                 <div className="rounded-lg overflow-hidden h-64 border border-gray-200">
-//                                     <iframe
-//                                         title={`${selected.city} map`}
-//                                         src={googleMapsSrc(
-//                                             selected.coords.lat,
-//                                             selected.coords.lng,
-//                                             14
-//                                         )}
-//                                         className="w-full h-full border-0"
-//                                         loading="lazy"
-//                                     />
-//                                 </div>
-
-//                                 <div className="p-4 bg-gray-50 rounded-lg">
-//                                     <h4 className="font-semibold text-slate-800">
-//                                         {selected.city}
-//                                     </h4>
-//                                     <p className="text-sm text-slate-600 mt-1">
-//                                         {selected.region}
-//                                     </p>
-
-//                                     <div className="mt-3 grid grid-cols-1 gap-2 text-sm">
-//                                         <div className="flex items-center gap-2">
-//                                             <MapPin className="w-4 h-4 text-slate-500" />
-//                                             <span className="text-slate-600">
-//                                                 مقام: {selected.coords.lat}, {selected.coords.lng}
-//                                             </span>
-//                                         </div>
-
-//                                         <div className="flex items-center gap-2">
-//                                             <Phone className="w-4 h-4 text-slate-500" />
-//                                             <span className="text-slate-600">
-//                                                 فون: {selected.phone}
-//                                             </span>
-//                                         </div>
-
-//                                         <div className="flex items-center gap-2">
-//                                             <Clock className="w-4 h-4 text-slate-500" />
-//                                             <span className="text-slate-600">
-//                                                 اوقات: {selected.hours}
-//                                             </span>
-//                                         </div>
-
-//                                         <div className="flex items-center gap-2">
-//                                             <Globe className="w-4 h-4 text-slate-500" />
-//                                             <a
-//                                                 href={`https://www.google.com/maps/search/?api=1&query=${selected.coords.lat},${selected.coords.lng}`}
-//                                                 target="_blank"
-//                                                 rel="noreferrer"
-//                                                 className="text-emerald-600 hover:underline inline-flex items-center gap-2"
-//                                             >
-//                                                 نقشہ پر دیکھیں <ExternalLink className="w-4 h-4" />
-//                                             </a>
-//                                         </div>
-//                                     </div>
-
-//                                     <p className="mt-3 text-sm text-slate-700 leading-6">
-//                                         {selected.blurb}
-//                                     </p>
-
-//                                     <div className="mt-4 flex gap-2">
-//                                         <button
-//                                             onClick={() =>
-//                                                 openDirections(selected.coords.lat, selected.coords.lng)
-//                                             }
-//                                             className="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
-//                                         >
-//                                             راستہ حاصل کریں
-//                                         </button>
-//                                         <a
-//                                             href={`tel:${selected.phone}`}
-//                                             className="px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50"
-//                                         >
-//                                             فون کریں
-//                                         </a>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </motion.div>
-//                 </div>
-//             )}
-//         </div>
-//     );
-// }
+//                                      

@@ -171,7 +171,7 @@ export default function DarseNizami() {
   ];
 
   return (
-    <section className="bg-gradient-to-t from-green-50 via-white to-yellow-50 py-16 px-6">
+    <section className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 py-16 px-6">
       {/* Section Heading */}
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">
@@ -181,7 +181,7 @@ export default function DarseNizami() {
       </div>
 
       {/* Year Blocks */}
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-3xl mx-auto space-y-4 py-8 bg-gradient-to-t from-yellow-50 via-white to-blue-50 px-6">
         {years.map((year) => (
           <div
             key={year.id}

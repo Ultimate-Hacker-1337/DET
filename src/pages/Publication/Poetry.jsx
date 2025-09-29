@@ -18,6 +18,7 @@ export default function Poetry() {
   ];
 
   const poems = [
+    // --- Urdu ---
     {
       id: 1,
       title: "لب پہ آتی ہے دعا",
@@ -58,29 +59,125 @@ export default function Poetry() {
         "تیرے دن اے بہار پھرتے ہیں",
       ],
     },
+
+    // --- English ---
+    {
+      id: 5,
+      title: "Hope is the Thing",
+      poet: "Emily Dickinson",
+      lang: "english",
+      lines: [
+        "Hope is the thing with feathers",
+        "That perches in the soul –",
+      ],
+    },
+    {
+      id: 6,
+      title: "The Road Not Taken",
+      poet: "Robert Frost",
+      lang: "english",
+      lines: [
+        "Two roads diverged in a yellow wood,",
+        "And sorry I could not travel both",
+      ],
+    },
+
+    // --- Pashto ---
+    {
+      id: 7,
+      title: "زما یاره",
+      poet: "رحمان بابا",
+      lang: "pashto",
+      lines: [
+        "زما یاره زما د زړه قرار دی",
+        "بې د یاره ژوند لکه د غم دار دی",
+      ],
+    },
+
+    // --- Arabic ---
+    {
+      id: 8,
+      title: "قصيدة البردة",
+      poet: "الإمام البوصيري",
+      lang: "arabic",
+      lines: [
+        "محمد سيد الكونين والثقلين",
+        "والفريقين من عرب ومن عجم",
+      ],
+    },
+
+    // --- Farsi ---
+    {
+      id: 9,
+      title: "بنی آدم",
+      poet: "سعدی شیرازی",
+      lang: "farsi",
+      lines: [
+        "بنی آدم اعضای یکدیگرند",
+        "که در آفرينش ز یک گوهرند",
+      ],
+    },
+
+    // --- Turkish ---
+    {
+      id: 10,
+      title: "İstiklâl Marşı",
+      poet: "Mehmet Akif Ersoy",
+      lang: "turkish",
+      lines: [
+        "Korkma, sönmez bu şafaklarda yüzen al sancak;",
+        "Sönmeden yurdumun üstünde tüten en son ocak.",
+      ],
+    },
+
+    // --- Sindhi ---
+    {
+      id: 11,
+      title: "وطن",
+      poet: "شيخ اياز",
+      lang: "sindhi",
+      lines: [
+        "سنڌڙي، تون وڏيءَ مهربان آهين،",
+        "تو سان ئي منھنجو سارو جهان آهي.",
+      ],
+    },
+
+    // --- Punjabi ---
+    {
+      id: 12,
+      title: "اج آکھاں وارث شاہ نو",
+      poet: "امرتا پریتم",
+      lang: "punjabi",
+      lines: [
+        "اج آکھاں وارث شاہ نو، کتوں قبراں وچوں بول",
+        "تے اج کتاب عشق دا کوئی اگلا ورقہ پھول",
+      ],
+    },
   ];
 
   const filtered = poems.filter((p) => p.lang === activeLang);
 
   return (
-    <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
-      <div className="max-w-6xl mx-auto text-center mb-10">
-        <h3 className="text-3xl md:text-4xl font-extrabold text-emerald-800 relative inline-block">
+    <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 min-h-screen py-10 px-3 sm:px-6 lg:px-12">
+      {/* Title */}
+      <div className="max-w-6xl mx-auto text-center mb-8 sm:mb-12">
+        <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-emerald-800 relative inline-block">
           اشعار (تحریری)
-          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-yellow-400 rounded-full"></span>
+          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-20 sm:w-24 h-1 bg-yellow-400 rounded-full"></span>
         </h3>
       </div>
 
       {/* Language Tabs */}
-      <div className="flex justify-center flex-wrap gap-2 mb-12">
+      <div className="flex justify-center flex-wrap gap-2 mb-8 sm:mb-12">
         {languages.map((lang) => (
           <button
             key={lang}
             onClick={() => setActiveLang(lang)}
-            className={`px-5 py-2 rounded-full transition font-medium ${activeLang === lang
+            className={`px-4 py-2 rounded-full text-sm sm:text-base transition font-medium ${
+              activeLang === lang
                 ? "bg-green-700 text-white shadow"
                 : "bg-white text-green-700 border border-green-700 hover:bg-green-50"
-              }`}
+            }`}
           >
             {lang.toUpperCase()}
           </button>
@@ -88,7 +185,7 @@ export default function Poetry() {
       </div>
 
       {/* Poetry Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
         {filtered.map((poem, idx) => (
           <motion.div
             key={poem.id}
@@ -97,21 +194,31 @@ export default function Poetry() {
             transition={{ duration: 0.3, delay: idx * 0.1 }}
             className="bg-white rounded-2xl shadow hover:shadow-lg transition border border-green-100 overflow-hidden"
           >
-            <div className="bg-gradient-to-r from-green-600 to-green-700 text-white px-4 py-2 flex justify-between items-center">
-              <h3 className="font-bold">{poem.title}</h3>
-              <span className="bg-white text-green-700 px-2 py-1 text-xs rounded-full font-medium">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-green-600 to-green-700 text-white px-3 sm:px-4 py-2 flex justify-between items-center">
+              <h3 className="font-bold text-sm sm:text-base">{poem.title}</h3>
+              <span className="bg-white text-green-700 px-2 py-0.5 text-xs rounded-full font-medium">
                 {poem.lang.toUpperCase()}
               </span>
             </div>
-            <div className="p-6 text-center">
-              <p className="text-sm text-gray-500 mb-2">شاعر: {poem.poet}</p>
+
+            {/* Body */}
+            <div className="p-4 sm:p-6 text-center">
+              <p className="text-xs sm:text-sm text-gray-500 mb-2">
+                شاعر: {poem.poet}
+              </p>
               {poem.lines.map((line, i) => (
-                <p key={i} className="text-lg leading-relaxed text-gray-800">
+                <p
+                  key={i}
+                  className="text-base sm:text-lg leading-relaxed text-gray-800"
+                >
                   {line}
                 </p>
               ))}
             </div>
-            <div className="px-4 py-3 flex justify-end gap-2 border-t">
+
+            {/* Footer */}
+            <div className="px-3 sm:px-4 py-2 sm:py-3 flex justify-end gap-2 border-t">
               <button className="p-2 rounded-full hover:bg-gray-100">
                 <Copy size={18} className="text-gray-600" />
               </button>

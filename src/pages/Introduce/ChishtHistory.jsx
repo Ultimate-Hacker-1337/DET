@@ -7,26 +7,62 @@ export default function ChishtHistory() {
 
   const history = [
     {
-      name: "خواجہ معین الدین چشتی اجمیری",
+      name: "خواجہ معین الدین اجمیری",
       years: "1142–1236 AD",
-      desc: "خواجہ معین الدین چشتی اجمیری رحمۃ اللہ علیہ برصغیر پاک و ہند میں چشتی سلسلہ کے بانی ہیں۔ آپ نے محبت، اخوت اور رواداری کی تعلیمات کو عام کیا۔",
+      desc: "برصغیر میں روحانی تعلیمات کے بانی، جنہوں نے محبت اور رواداری کا پیغام عام کیا۔",
     },
     {
       name: "خواجہ قطب الدین بختیار کاکی",
       years: "1173–1235 AD",
-      desc: "خواجہ قطب الدین بختیار کاکی رحمۃ اللہ علیہ، خواجہ معین الدین چشتی کے خلیفہ اول اور سلسلہ چشتیہ کے اہم مبلغ تھے۔",
+      desc: "حضرت اجمیری کے خلیفہ اول، دہلی میں قیام فرمایا اور خلقِ خدا کی خدمت کی۔",
     },
     {
       name: "بابا فرید الدین گنج شکر",
       years: "1179–1266 AD",
-      desc: "بابا فرید الدین گنج شکر رحمۃ اللہ علیہ ایک عظیم صوفی بزرگ اور شاعر تھے جن کا تعلق پاکپتن، پنجاب سے تھا۔",
+      desc: "پاکپتن کے عظیم بزرگ اور شاعر، جنہیں گنج شکر کے لقب سے یاد کیا جاتا ہے۔",
     },
     {
       name: "خواجہ نظام الدین اولیاء",
       years: "1238–1325 AD",
-      desc: "خواجہ نظام الدین اولیاء رحمۃ اللہ علیہ سلسلہ چشتیہ کے سب سے مشہور بزرگ تھے، جنہیں 'محبوبِ الٰہی' کے لقب سے یاد کیا جاتا ہے۔",
+      desc: "دہلی کے مشہور بزرگ، جنہیں محبوبِ الٰہی کہا جاتا ہے۔",
     },
+    {
+      name: "حضرت نصیر الدین چراغ دہلوی",
+      years: "1274–1356 AD",
+      desc: "دہلی کے آخری بڑے صوفی بزرگ، جنہوں نے سادگی اور خدمت کو فروغ دیا۔",
+    },
+    {
+      name: "خواجہ گیسو دراز بندہ نواز",
+      years: "1321–1422 AD",
+      desc: "جنہوں نے دکن (گلبرگہ) میں خانقاہ قائم کی اور روحانی فیض کو پھیلایا۔",
+    },
+    {
+      name: "مشائخ دہلی و پنجاب",
+      years: "15ویں–17ویں صدی",
+      desc: "اس دور میں علما و مشائخ نے تعلیمات کی حفاظت اور ترویج کی۔",
+    },
+    {
+      name: "خواجہ نور محمد مہاروی",
+      years: "1730–1790 AD",
+      desc: "مہار شریف کے بزرگ، جنہوں نے ذکر اور خدمتِ خلق کو زندہ کیا۔",
+    },
+    {
+      name: "خواجہ غلام فرید",
+      years: "1845–1901 AD",
+      desc: "مشہور صوفی شاعر، جنہوں نے سرائیکی اور اردو میں کلام کہا۔",
+    },
+    {
+      name: "خواجہ ذکریا ملتانی",
+      years: "وفات: 1957 AD",
+      desc: "20ویں صدی کے بزرگ، جنہوں نے ملتان میں روحانی فیض کو عام کیا۔",
+    },
+    {
+      name: "خواجہ مختار الدین شاہ",
+      years: "موجودہ دور",
+      desc: "سلسلے کے موجودہ بزرگ اور جانشین، جو تعلیمات کو آگے بڑھا رہے ہیں۔",
+    }
   ];
+
 
   return (
     <div className="bg-gradient-to-t from-emerald-50 via-white to-yellow-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
@@ -49,9 +85,8 @@ export default function ChishtHistory() {
           {history.map((item, idx) => (
             <motion.div
               key={idx}
-              className={`relative flex flex-col md:flex-row items-center ${
-                idx % 2 === 0 ? "md:justify-start" : "md:justify-end"
-              }`}
+              className={`relative flex flex-col md:flex-row items-center ${idx % 2 === 0 ? "md:justify-start" : "md:justify-end"
+                }`}
               initial={{ opacity: 0, y: 60 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: idx * 0.25 }}
@@ -67,9 +102,8 @@ export default function ChishtHistory() {
               <motion.div
                 whileHover={{ scale: 1.03 }}
                 transition={{ duration: 0.3 }}
-                className={`bg-white/80 backdrop-blur-md shadow-lg border border-emerald-100 rounded-2xl p-6 md:w-5/12 ${
-                  idx % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
-                }`}
+                className={`bg-white/80 backdrop-blur-md shadow-lg border border-emerald-100 rounded-2xl p-6 md:w-5/12 ${idx % 2 === 0 ? "md:mr-auto" : "md:ml-auto"
+                  }`}
               >
                 <h3 className="text-2xl font-bold text-emerald-700 mb-2">
                   {item.name}

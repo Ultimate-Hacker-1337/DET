@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import logoImg from "../assets/logo.avif";
 import audio1 from "../assets/audio.mp3";
-import bg3 from "../assets/bg3.jpg";
+import bg3 from "../assets/bg3.avif";
 import { FaUser } from "react-icons/fa";
 
 export default function Home() {

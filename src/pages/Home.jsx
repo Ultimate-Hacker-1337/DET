@@ -1,6 +1,9 @@
 // src/pages/Home.jsx
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import logoImg from "../assets/logo.avif";
+import audio1 from "../assets/audio.mp3";
+import audio2 from "../assets/audio2.mp3";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -78,12 +81,12 @@ export default function Home() {
             {[
               {
                 name: "مولانا محمد ذکریا کاندھلوی",
-                image: "src/assets/logo.avif",
+                image: logoImg,
                 desc: "شیخ الحدیث مولانا محمد ذکریا کاندھلوی (رحمۃ اللہ) عالمی شہرت یافتہ عالم اور روحانی رہنما تھے۔",
               },
               {
                 name: "مفتی سید مختار الدین شاہ",
-                image: "src/assets/logo.avif",
+                image: logoImg,
                 desc: "حضرت مفتی سید مختار الدین شاہ ایک ممتاز اسلامی اسکالر اور شیخ الحدیث تھے۔",
               },
             ].map((person, idx) => (
@@ -140,7 +143,7 @@ export default function Home() {
             <h3 className="text-xl font-semibold text-[#4a2f1b] mb-1">اصلاحی مجلس - حصہ اول</h3>
             <p className="text-sm text-[#2d1a10] mb-5">مفتی سید مختار الدین شاہ صاحب</p>
             <audio controls className="w-full rounded-lg">
-              <source src="src/assets/audio.mp3" type="audio/mp3" />
+              <source src={audio1} type="audio/mp3" />
               آپ کا براؤزر آڈیو پلیئر کو سپورٹ نہیں کرتا۔
             </audio>
           </div>

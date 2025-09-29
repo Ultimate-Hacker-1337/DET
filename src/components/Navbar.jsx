@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ChevronDown, Search, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import logo from "../assets/logo.avif";
 
 export default function Header() {
   const [openMenu, setOpenMenu] = useState(null);
@@ -48,7 +49,7 @@ export default function Header() {
         {/* Logo Section */}
         <Link to="/" className="flex items-center gap-3">
           <motion.img
-            src="src/assets/logo.avif"
+            src={logo}
             className="h-12 w-12 rounded-full shadow-lg border-2 border-emerald-200"
             whileHover={{ rotate: 6, scale: 1.05 }}
             transition={{ duration: 0.3 }}

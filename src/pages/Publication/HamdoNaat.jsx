@@ -1,13 +1,16 @@
+// src/pages/Kalaam.jsx
 import { useState, useRef } from "react";
-import { Play, Download, Save, Search, Pause, X } from "lucide-react";
-import { motion } from "framer-motion";
+import { Play, Pause, Save, Download, X, Search } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import audio2 from "../../assets/audio2.mp3";
 
-export default function HamdoNaat() {
+export default function Kalaam() {
   const [activeLang, setActiveLang] = useState("urdu");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("newest");
   const [currentAudio, setCurrentAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   const audioRef = useRef(null);
 
@@ -23,15 +26,15 @@ export default function HamdoNaat() {
   ];
 
   const bayanat = [
-    { id: 1, title: "اصلاحی مجالس - حصہ اول", scholar: "مفتی سید مختار الدین شاہ صاحب", date: "2025-09-28", duration: "30:15", lang: "urdu", url: "src/assets/audio2.mp3" },
-    { id: 2, title: "Islamic Lecture - Part 1", scholar: "Mufti Saeed Ahmad", date: "2025-09-27", duration: "22:40", lang: "english", url: "src/assets/audio2.mp3" },
-    { id: 3, title: "پښتو بیان - برخه لومړی", scholar: "مولانا احمد جان", date: "2025-09-26", duration: "18:30", lang: "pashto", url: "src/assets/audio2.mp3" },
-    { id: 4, title: "محاضرة بالعربية", scholar: "الشيخ محمد سعيد", date: "2025-09-25", duration: "40:10", lang: "arabic", url: "src/assets/audio2.mp3" },
-    { id: 5, title: "درس فارسی - بخش اول", scholar: "مولوی حسن رضا", date: "2025-09-24", duration: "28:50", lang: "farsi", url: "src/assets/audio2.mp3" },
-    { id: 6, title: "Türkçe Sohbet - Bölüm 1", scholar: "Hoca Mehmet", date: "2025-09-23", duration: "32:00", lang: "turkish", url: "src/assets/audio2.mp3" },
-    { id: 7, title: "سندی بیان - پهريون حصو", scholar: "مولانا عبدالحکیم", date: "2025-09-22", duration: "20:15", lang: "sindhi", url: "src/assets/audio2.mp3" },
-    { id: 8, title: "پنجابی خطاب - حصہ اول", scholar: "پیر غلام رسول", date: "2025-09-21", duration: "26:40", lang: "punjabi", url: "src/assets/audio2.mp3" },
-    { id: 9, title: "اصلاحی مجالس - حصہ دوم", scholar: "مولانا عبدالسلام", date: "2025-09-20", duration: "34:25", lang: "urdu", url: "src/assets/audio2.mp3" },
+    { id: 1, title: "اصلاحی مجالس - حصہ اول", scholar: "مفتی سید مختار الدین شاہ صاحب", date: "2025-09-28", duration: "30:15", lang: "urdu", url: audio2 },
+    { id: 2, title: "Islamic Lecture - Part 1", scholar: "Mufti Saeed Ahmad", date: "2025-09-27", duration: "22:40", lang: "english", url: audio2 },
+    { id: 3, title: "پښتو بیان - برخه لومړی", scholar: "مولانا احمد جان", date: "2025-09-26", duration: "18:30", lang: "pashto", url: audio2 },
+    { id: 4, title: "محاضرة بالعربية", scholar: "الشيخ محمد سعيد", date: "2025-09-25", duration: "40:10", lang: "arabic", url: audio2 },
+    { id: 5, title: "درس فارسی - بخش اول", scholar: "مولوی حسن رضا", date: "2025-09-24", duration: "28:50", lang: "farsi", url: audio2 },
+    { id: 6, title: "Türkçe Sohbet - Bölüm 1", scholar: "Hoca Mehmet", date: "2025-09-23", duration: "32:00", lang: "turkish", url: audio2 },
+    { id: 7, title: "سندی بیان - پهريون حصو", scholar: "مولانا عبدالحکیم", date: "2025-09-22", duration: "20:15", lang: "sindhi", url: audio2 },
+    { id: 8, title: "پنجابی خطاب - حصہ اول", scholar: "پیر غلام رسول", date: "2025-09-21", duration: "26:40", lang: "punjabi", url: audio2 },
+    { id: 9, title: "اصلاحی مجالس - حصہ دوم", scholar: "مولانا عبدالسلام", date: "2025-09-20", duration: "34:25", lang: "urdu", url: audio2 },
     { id: 10, title: "Islamic Lecture - Part 2", scholar: "Shaykh Abdullah Khan", date: "2025-09-19", duration: "19:40", lang: "english", url: "/audio/bayan10.mp3" },
     { id: 11, title: "پښتو بیان - برخه دویم", scholar: "مولانا سمیع اللہ", date: "2025-09-18", duration: "24:15", lang: "pashto", url: "/audio/bayan11.mp3" },
     { id: 12, title: "محاضرة جديدة بالعربية", scholar: "الشيخ عبد الله", date: "2025-09-17", duration: "38:10", lang: "arabic", url: "/audio/bayan12.mp3" },
@@ -75,26 +78,31 @@ export default function HamdoNaat() {
     { id: 50, title: "Islamic Lecture - Part 7", scholar: "Shaykh Usman Qureshi", date: "2025-08-10", duration: "21:50", lang: "english", url: "/audio/bayan50.mp3" }
   ];
 
-
+  // Filter & Sort
   const filtered = bayanat
-    .filter((b) => b.lang === activeLang)
     .filter(
       (b) =>
         b.title.toLowerCase().includes(search.toLowerCase()) ||
         b.scholar.toLowerCase().includes(search.toLowerCase())
     )
-    .sort((a, b) => {
-      if (sortBy === "newest") return new Date(b.date) - new Date(a.date);
-      if (sortBy === "oldest") return new Date(a.date) - new Date(b.date);
-      return 0;
-    });
+    .sort((a, b) =>
+      sortBy === "newest"
+        ? new Date(b.date) - new Date(a.date)
+        : new Date(a.date) - new Date(b.date)
+    );
 
-  const handlePlay = (bayan) => {
-    if (currentAudio?.id === bayan.id && isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
+  // Handle Play
+  const handlePlay = (b) => {
+    if (currentAudio?.id === b.id) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
     } else {
-      setCurrentAudio(bayan);
+      setCurrentAudio(b);
       setTimeout(() => {
         audioRef.current.play();
         setIsPlaying(true);
@@ -102,46 +110,61 @@ export default function HamdoNaat() {
     }
   };
 
+  // Update progress
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      const prog =
+        (audioRef.current.currentTime / audioRef.current.duration) * 100;
+      setProgress(prog || 0);
+    }
+  };
+
   return (
     <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 min-h-screen py-16 px-4 sm:px-6 lg:px-12">
-{/* Section Heading */}
-<div className="max-w-6xl mx-auto text-center mb-10">
-  <h3 className="text-3xl md:text-4xl font-extrabold text-emerald-800 relative inline-block">
-    ویڈیو بیانات
-    <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-yellow-400 rounded-full"></span>
-  </h3>
-</div>
-
-      {/* Language Tabs */}
-      <div className="flex justify-center flex-wrap gap-2 mb-8">
-        {languages.map((lang) => (
-          <button
-            key={lang}
-            onClick={() => setActiveLang(lang)}
-            className={`px-5 py-2 rounded-full transition font-medium ${activeLang === lang
-                ? "bg-green-700 text-white shadow"
-                : "bg-white text-green-700 border border-green-700 hover:bg-green-50"
-              }`}
-          >
-            {lang.toUpperCase()}
-          </button>
-        ))}
+      {/* Section Heading */}
+      <div className="max-w-6xl mx-auto text-center mb-10">
+        <h3 className="text-3xl md:text-4xl font-extrabold text-emerald-800 relative inline-block">
+          حمد و نعت و کلام
+          <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-24 h-1 bg-yellow-400 rounded-full"></span>
+        </h3>
       </div>
 
+      {/* Language Tabs */}
+      <motion.div
+        className="flex justify-center flex-wrap gap-2 mb-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
+        {languages.map((lang) => (
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            key={lang}
+            onClick={() => setActiveLang(lang)}
+            className={`px-4 py-2 rounded-full text-sm md:text-base font-medium transition-all shadow ${
+              activeLang === lang
+                ? "bg-gradient-to-r from-emerald-600 to-green-700 text-white shadow-lg"
+                : "bg-white text-emerald-700 border border-emerald-600 hover:bg-emerald-50"
+            }`}
+          >
+            {lang.toUpperCase()}
+          </motion.button>
+        ))}
+      </motion.div>
+
       {/* Search + Sort */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-3 mb-6">
         <div className="relative w-full md:w-1/2">
           <input
             type="text"
             placeholder="🔍 تلاش کریں (عنوان یا مقرر)"
-            className="w-full border rounded-lg py-2 px-4 pl-10 shadow-sm focus:ring-green-600 focus:border-green-600"
+            className="w-full border rounded-lg py-2 px-4 pl-10 text-sm md:text-base shadow-sm focus:ring-emerald-600 focus:border-emerald-600"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
           <Search className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
         </div>
         <select
-          className="border rounded-lg py-2 px-3 shadow-sm focus:ring-green-600 focus:border-green-600"
+          className="border rounded-lg py-2 px-3 text-sm md:text-base shadow-sm focus:ring-emerald-600 focus:border-emerald-600"
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value)}
         >
@@ -150,10 +173,10 @@ export default function HamdoNaat() {
         </select>
       </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto bg-white shadow rounded-xl">
-        <table className="w-full text-right border-collapse">
-          <thead className="bg-green-700 text-white">
+      {/* Desktop Table */}
+      <div className="hidden md:block overflow-x-auto bg-white shadow-lg rounded-xl">
+        <table className="w-full text-right border-collapse rounded-xl overflow-hidden">
+          <thead className="bg-gradient-to-r from-emerald-700 to-green-800 text-white text-sm md:text-base">
             <tr>
               <th className="p-3">نمبر</th>
               <th className="p-3">عنوان</th>
@@ -168,14 +191,16 @@ export default function HamdoNaat() {
             {filtered.map((b, idx) => (
               <motion.tr
                 key={b.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: idx * 0.1 }}
-                className="border-b hover:bg-gray-50"
+                transition={{ duration: 0.3, delay: idx * 0.05 }}
+                className={`${
+                  idx % 2 === 0 ? "bg-gray-50" : "bg-white"
+                } border-b hover:bg-emerald-50 text-sm md:text-base`}
               >
                 <td className="p-3">{idx + 1}</td>
-                <td className="p-3 font-medium">{b.title}</td>
-                <td className="p-3 text-gray-600">{b.scholar}</td>
+                <td className="p-3 font-medium break-words">{b.title}</td>
+                <td className="p-3 text-gray-700">{b.scholar}</td>
                 <td className="p-3 text-gray-500">
                   {new Date(b.date).toLocaleDateString("en-US", {
                     year: "numeric",
@@ -187,21 +212,21 @@ export default function HamdoNaat() {
                 <td className="p-3">
                   <button
                     onClick={() => handlePlay(b)}
-                    className="bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition"
+                    className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition shadow"
                   >
                     {currentAudio?.id === b.id && isPlaying ? (
-                      <Pause size={18} />
+                      <Pause size={16} />
                     ) : (
-                      <Play size={18} />
+                      <Play size={16} />
                     )}
                   </button>
                 </td>
                 <td className="p-3 flex gap-2">
-                  <button className="bg-green-600 text-white p-2 rounded-md hover:bg-green-700 transition">
-                    <Save size={18} />
+                  <button className="bg-gradient-to-r from-emerald-500 to-green-600 text-white p-2 rounded-md hover:from-emerald-600 hover:to-green-700 transition shadow">
+                    <Save size={16} />
                   </button>
-                  <button className="bg-gray-600 text-white p-2 rounded-md hover:bg-gray-700 transition">
-                    <Download size={18} />
+                  <button className="bg-gradient-to-r from-gray-500 to-gray-600 text-white p-2 rounded-md hover:from-gray-600 hover:to-gray-700 transition shadow">
+                    <Download size={16} />
                   </button>
                 </td>
               </motion.tr>
@@ -210,36 +235,96 @@ export default function HamdoNaat() {
         </table>
       </div>
 
-      {/* Floating Audio Player */}
-      {currentAudio && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white shadow-xl rounded-full px-6 py-3 flex items-center gap-4 w-[90%] md:w-[600px] border"
-        >
-          <div className="flex-1">
-            <h4 className="font-semibold">{currentAudio.title}</h4>
-            <p className="text-sm text-gray-500">{currentAudio.scholar}</p>
-          </div>
-          <button
-            onClick={() => handlePlay(currentAudio)}
-            className="bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700 transition"
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-4">
+        {filtered.map((b, idx) => (
+          <motion.div
+            key={b.id}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: idx * 0.05 }}
+            className="bg-white p-4 rounded-xl shadow border-l-4 border-emerald-500"
           >
-            {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-          </button>
-          <button
-            onClick={() => {
-              audioRef.current.pause();
-              setCurrentAudio(null);
-              setIsPlaying(false);
-            }}
-            className="bg-red-500 text-white p-3 rounded-full hover:bg-red-600 transition"
+            <h4 className="font-semibold text-base break-words">{b.title}</h4>
+            <p className="text-sm text-gray-700">{b.scholar}</p>
+            <p className="text-xs text-gray-500">
+              {new Date(b.date).toLocaleDateString("en-US")} • {b.duration}
+            </p>
+            <div className="flex gap-2 mt-3">
+              <button
+                onClick={() => handlePlay(b)}
+                className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 rounded-md hover:from-blue-600 hover:to-blue-700 transition flex items-center justify-center gap-1 shadow"
+              >
+                {currentAudio?.id === b.id && isPlaying ? (
+                  <>
+                    <Pause size={16} /> Pause
+                  </>
+                ) : (
+                  <>
+                    <Play size={16} /> Play
+                  </>
+                )}
+              </button>
+              <button className="bg-gradient-to-r from-emerald-500 to-green-600 text-white p-2 rounded-md hover:from-emerald-600 hover:to-green-700 transition shadow">
+                <Save size={16} />
+              </button>
+              <button className="bg-gradient-to-r from-gray-500 to-gray-600 text-white p-2 rounded-md hover:from-gray-600 hover:to-gray-700 transition shadow">
+                <Download size={16} />
+              </button>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Floating Player */}
+      <AnimatePresence>
+        {currentAudio && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-3 left-1/2 transform -translate-x-1/2 backdrop-blur-md bg-white/90 shadow-xl rounded-2xl px-4 py-3 flex items-center gap-3 w-[95%] sm:w-[80%] md:w-[600px] border border-emerald-200"
           >
-            <X size={20} />
-          </button>
-          <audio ref={audioRef} src={currentAudio.url} onEnded={() => setIsPlaying(false)} />
-        </motion.div>
-      )}
+            <div className="flex-1 min-w-0">
+              <h4 className="font-semibold text-sm md:text-base truncate">
+                {currentAudio.title}
+              </h4>
+              <p className="text-xs md:text-sm text-gray-500 truncate">
+                {currentAudio.scholar}
+              </p>
+              {/* Progress Bar */}
+              <div className="w-full bg-gray-200 h-1 mt-2 rounded-full overflow-hidden">
+                <div
+                  className="h-1 bg-gradient-to-r from-emerald-500 to-green-600"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+            </div>
+            <button
+              onClick={() => handlePlay(currentAudio)}
+              className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-2 md:p-3 rounded-full hover:from-blue-600 hover:to-blue-700 transition shadow"
+            >
+              {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+            </button>
+            <button
+              onClick={() => {
+                audioRef.current.pause();
+                setCurrentAudio(null);
+                setIsPlaying(false);
+              }}
+              className="bg-gradient-to-r from-red-500 to-red-600 text-white p-2 md:p-3 rounded-full hover:from-red-600 hover:to-red-700 transition shadow"
+            >
+              <X size={18} />
+            </button>
+            <audio
+              ref={audioRef}
+              src={currentAudio.url}
+              onTimeUpdate={handleTimeUpdate}
+              onEnded={() => setIsPlaying(false)}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

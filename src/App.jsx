@@ -25,7 +25,7 @@ import YourHalqa from "./pages/Contact/YourHalqa";
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-gradient-to-t from-yellow-50 via-white to-blue-50">
         <ScrollToTop />
         {/* Shared Navbar */}
         <Navbar />

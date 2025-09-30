@@ -10,6 +10,9 @@ import {
     ExternalLink,
     Clock,
 } from "lucide-react";
+import bg from "../../assets/bg.avif";
+import bg3 from "../../assets/bg3.avif";
+import placeholderCampus from "../../assets/logo.avif";
 
 const campuses = [
     {
@@ -19,7 +22,7 @@ const campuses = [
         contactName: "مولانا علی حسن",
         phone: "0300-9876543",
         coords: { lat: 33.6844, lng: 73.0479 },
-        images: ["src/assets/bg3.jpg", "src/assets/bg.jpg"],
+    images: [bg3, bg],
         hours: "روزانہ: 9am - 9pm",
         blurb:
             "تحریک ایمان و تقویٰ کا اسلام آباد مرکز، تعلیمی و روحانی تربیت کے لیے جدید سہولیات کے ساتھ۔",
@@ -31,7 +34,7 @@ const campuses = [
         contactName: "حاجی محمد ادریس",
         phone: "0321-1122334",
         coords: { lat: 31.5204, lng: 74.3587 },
-        images: ["src/assets/bg.jpg", "src/assets/bg3.jpg"],
+    images: [bg, bg3],
         hours: "پیر تا جمعہ: 10am - 6pm",
         blurb:
             "لاہور مرکز میں روحانی نشستیں، درس نظامی اور کمیونٹی پروگرامز کا انعقاد کیا جاتا ہے۔",
@@ -43,7 +46,7 @@ const campuses = [
         contactName: "مفتی زید عباسی",
         phone: "0345-5678901",
         coords: { lat: 24.8607, lng: 67.0011 },
-        images: ["src/assets/bg.jpg"],
+    images: [bg],
         hours: "روزانہ: 9am - 5pm",
         blurb:
             "کراچی مرکز میں تعلیمی کلاسز اور فلاحی خدمات جاری ہیں — مستحقین تک پہنچانے کے منصوبے فعال ہیں۔",
@@ -55,7 +58,7 @@ const campuses = [
         contactName: "مولانا احمد خان",
         phone: "0333-1234567",
         coords: { lat: 34.0151, lng: 71.5249 },
-        images: ["src/assets/bg3.jpg"],
+    images: [bg3],
         hours: "ہفتہ: 10am - 4pm",
         blurb:
             "پشاور مرکز مقامی کمیونٹی کی تربیت اور خد مت کے لیے مخصوص پروگرامز چلاتا ہے۔",
@@ -67,7 +70,7 @@ const campuses = [
         contactName: "مولانا بلال احمد",
         phone: "0312-3456789",
         coords: { lat: 34.4, lng: 71.6 },
-        images: ["src/assets/bg3.jpg"],
+    images: [bg3],
         hours: "معمول کے مطابق",
         blurb:
             "کونڈ کا مرکز وادی کے قریب واقع ہے اور یہاں روحانی تربیت اور جماعتی سرگرمیاں منعقد ہوتی ہیں۔",
@@ -153,7 +156,7 @@ export default function Marakiz() {
                                 <div className="flex items-start gap-4 md:gap-6">
                                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 shadow-sm">
                                         <img
-                                            src={c.images?.[0] || "src/assets/placeholder-campus.jpg"}
+                                            src={c.images?.[0] || placeholderCampus}
                                             alt={`${c.city} تصویر`}
                                             className="w-full h-full object-cover"
                                         />
@@ -277,7 +280,7 @@ export default function Marakiz() {
                                     <img
                                         src={
                                             selected.images?.[activeImage] ||
-                                            "src/assets/placeholder-campus.jpg"
+                                            placeholderCampus
                                         }
                                         alt={`${selected.city} image ${activeImage + 1}`}
                                         className="w-full h-full object-cover"
@@ -436,7 +439,7 @@ export default function Marakiz() {
                                     <img
                                         src={
                                             selected.images?.[activeImage] ||
-                                            "src/assets/placeholder-campus.jpg"
+                                            placeholderCampus
                                         }
                                         alt={`${selected.city} image ${activeImage + 1}`}
                                         className="w-full h-full object-cover"

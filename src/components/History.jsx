@@ -1,23 +1,25 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import bg from "../assets/bg.avif";
+import bg3 from "../assets/bg3.avif";
 
 export default function History() {
     const historyData = [
         {
             title: "ابتدائی ایام",
             text: "تحریک ایمان و تقویٰ کا قیام حضرت سید مخدوم شاہ صاحب کے دور میں ہوا۔ یہ تحریک کا آغاز ایک چھوٹے سے گاؤں میں ہوا، جہاں علم و تقویٰ کی روشنی لوگوں کے دلوں میں اجاگر کی گئی۔",
-            image: "src/assets/bg.jpg",
+            image: bg,
         },
         {
             title: "مرکز کا قیام",
             text: "ادارہ جدید دور کے تقاضوں کے مطابق ایک مرکزی مقام پر قائم ہوا۔ یہاں دینی تعلیمات، روحانی تربیت اور سماجی خدمات کے منصوبے شروع کیے گئے۔ اس مرکز نے نہ صرف مقامی سطح پر بلکہ قومی و عالمی سطح پر بھی نمایاں کردار ادا کیا۔",
-            image: "src/assets/bg3.jpg",
+            image: bg3,
         },
         {
             title: "موجودہ دور",
             text: "آج تحریک ایمان و تقویٰ جدید وسائل اور نصاب کے ذریعے علم، محبت اور خدمت کے مشن کو جاری رکھے ہوئے ہے۔ ادارہ جدید تعلیمی نصاب، رفاہی خدمات اور عالمی سطح پر تعاون کے ذریعے دین کی خدمت انجام دے رہا ہے۔",
-            image: "src/assets/bg.jpg",
+            image: bg,
         },
     ];
 

@@ -2,6 +2,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import { X, MapPin, Phone, Clock, ExternalLink } from "lucide-react";
+import bg from "../../assets/bg.avif";
+import bg3 from "../../assets/bg3.avif";
+import placeholder from "../../assets/logo.avif";
 
 const halqaat = [
   {
@@ -14,7 +17,7 @@ const halqaat = [
     contact: "0300-1234567",
     ameer: "مولانا احمد",
     coords: { lat: 33.6844, lng: 73.0479 },
-    image: "assets/bg.jpg",
+  image: bg,
     hours: "روزانہ: بعد نماز عصر",
   },
   {
@@ -27,7 +30,7 @@ const halqaat = [
     contact: "0302-3456789",
     ameer: "مولانا قاسم",
     coords: { lat: 31.5204, lng: 74.3587 },
-    image: "assets/bg3.jpg",
+  image: bg3,
     hours: "اتوار: 10am - 1pm",
   },
   // ... باقی
@@ -123,7 +126,7 @@ export default function ApKaHalqa() {
           {/* Image */}
           <div className="h-52 sm:h-64 overflow-hidden">
             <img
-              src={selectedHalqa.image || "src/assets/placeholder.jpg"}
+              src={selectedHalqa.image || placeholder}
               alt={selectedHalqa.area}
               className="w-full h-full object-cover"
             />

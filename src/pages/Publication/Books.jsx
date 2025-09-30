@@ -1,6 +1,7 @@
 // src/pages/Books.jsx
 import { ShoppingCart, FileDown } from "lucide-react";
 import { motion } from "framer-motion";
+import bookImg from "../../assets/book.avif";
 
 export default function Books() {
   const books = [
@@ -12,7 +13,7 @@ export default function Books() {
       publisher: "مکتبہ تحریک ایمان و تقویٰ",
       price: "PKR 750.00",
       desc: "روحانی بیداری اور خود اصلاحی پر ان کے خطبات کا مجموعہ۔",
-      image: "src/assets/book.avif",
+  image: bookImg,
     },
     {
       id: 2,
@@ -22,7 +23,7 @@ export default function Books() {
       publisher: "مکتبہ تحریک ایمان و تقویٰ",
       price: "PKR 800.00",
       desc: "ایمان کی خصوصیات کو تفصیل سے بیان کرنے والی ایک کتاب۔",
-      image: "src/assets/book.avif",
+  image: bookImg,
     },
     {
       id: 3,
@@ -32,7 +33,7 @@ export default function Books() {
       publisher: "مکتبہ تحریک ایمان و تقویٰ",
       price: "PKR 500.00",
       desc: "محبت اور عقیدت کے صوفیانہ راستے پر ایک پراثر متن۔",
-      image: "src/assets/book.avif",
+  image: bookImg,
     },
     {
       id: 4,
@@ -42,7 +43,7 @@ export default function Books() {
       publisher: "مکتبہ تحریک ایمان و تقویٰ",
       price: "PKR 600.00",
       desc: "ذکر کی مشق و فضیلت کی تفصیلی کتاب۔",
-      image: "src/assets/book.avif",
+  image: bookImg,
     },
   ];
 

@@ -1,6 +1,7 @@
 import { Eye, Target, Book, Heart, Users, Globe } from "lucide-react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import bg from "../../assets/bg.avif";
 
 export default function Home() {
     const { ref, inView } = useInView({
@@ -34,7 +35,7 @@ export default function Home() {
     return (
         <div className="bg-gradient-to-t from-yellow-50 via-white to-blue-50 py-16 px-6">
             {/* HERO */}
-            <section className="relative bg-[url('src/assets/bg.jpg')] bg-cover bg-center h-[40vh] flex items-center justify-center">
+            <section className="relative bg-cover bg-center h-[40vh] flex items-center justify-center" style={{ backgroundImage: `url(${bg})` }}>
                 <div className="absolute inset-0 bg-black/50" />
                 <div className="relative text-center text-white px-6">
                     <h1 className="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">

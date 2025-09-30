@@ -41,6 +41,14 @@ export default function Header() {
         { title: "داخلے", path: "/admissions" },
       ],
     },
+    {
+      title: "رابطہ",
+      path: "/contact",
+      sub: [
+        { title: "حلقات", path: "/raabta/halqaat" },
+        { title: "آپ کا حلقہ", path: "/raabta/your-halqa" },
+      ],
+    },
   ];
 
   return (

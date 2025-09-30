@@ -19,6 +19,8 @@ import DarseNizami from "./pages/Education/DarseNizami";
 import HifzeQuran from "./pages/Education/HifzeQuran";
 import Tajweed from "./pages/Education/Tajweed";
 import Admission from "./pages/Education/Admission";
+import Halqaat from "./pages/Contact/Halqaat";
+import YourHalqa from "./pages/Contact/YourHalqa";
 
 function App() {
   return (
@@ -47,6 +49,8 @@ function App() {
             <Route path="/hifz-quran" element={<HifzeQuran />} />
             <Route path="/tajweed-qiraat" element={<Tajweed />} />
             <Route path="/admissions" element={<Admission />} />
+            <Route path="/raabta/halqaat" element={<Halqaat />} />
+            <Route path="/raabta/your-halqa" element={<YourHalqa />} />
           </Routes>
         </main>
 

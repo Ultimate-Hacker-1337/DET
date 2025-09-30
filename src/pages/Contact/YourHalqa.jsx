@@ -1,7 +1,7 @@
 // src/components/ApKaHalqa.jsx
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
-import { X, MapPin, Phone, Clock, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, MapPin, Phone, Clock } from "lucide-react";
 import bg from "../../assets/bg.avif";
 import bg3 from "../../assets/bg3.avif";
 import placeholder from "../../assets/logo.avif";
@@ -17,7 +17,7 @@ const halqaat = [
     contact: "0300-1234567",
     ameer: "مولانا احمد",
     coords: { lat: 33.6844, lng: 73.0479 },
-  image: bg,
+    image: bg,
     hours: "روزانہ: بعد نماز عصر",
   },
   {
@@ -30,10 +30,9 @@ const halqaat = [
     contact: "0302-3456789",
     ameer: "مولانا قاسم",
     coords: { lat: 31.5204, lng: 74.3587 },
-  image: bg3,
+    image: bg3,
     hours: "اتوار: 10am - 1pm",
   },
-  // ... باقی
 ];
 
 const googleMapsSrc = (lat, lng, zoom = 15) =>
@@ -45,7 +44,6 @@ export default function ApKaHalqa() {
   const [showModal, setShowModal] = useState(false);
   const dialogRef = useRef(null);
 
-  // unique cities
   const cities = [...new Set(halqaat.map((h) => h.city))];
   const filteredHalqaat = halqaat.filter((h) => h.city === selectedCity);
 
@@ -66,18 +64,19 @@ export default function ApKaHalqa() {
   }, []);
 
   return (
-    <div className="bg-gradient-to-t from-yellow-50 via-white to-emerald-50 py-10 px-4 sm:px-6">
-      <h2 className="text-3xl md:text-4xl font-extrabold text-center text-emerald-800 mb-8">
+    // <div className="bg-gradient-to-t from-yellow-50 via-white to-emerald-50 py-12 px-4 sm:px-6 lg:px-12">
+      <div className="min-h-screen bg-gradient-to-t from-yellow-50 via-white to-emerald-50 py-12 px-4 sm:px-6 lg:px-12 flex flex-col">
+<h2 className="text-3xl md:text-4xl font-extrabold text-center text-emerald-800 mb-10">
         آپ کا حلقہ
       </h2>
 
       {/* City Select */}
-      <div className="max-w-md mx-auto mb-5">
+      <div className="max-w-md mx-auto mb-6">
         <label className="block mb-2 font-medium text-slate-700">
           شہر منتخب کریں:
         </label>
         <select
-          className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500"
+          className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           value={selectedCity}
           onChange={(e) => {
             setSelectedCity(e.target.value);
@@ -93,12 +92,12 @@ export default function ApKaHalqa() {
 
       {/* Area Select */}
       {selectedCity && (
-        <div className="max-w-md mx-auto mb-8">
+        <div className="max-w-md mx-auto mb-10">
           <label className="block mb-2 font-medium text-slate-700">
             علاقہ منتخب کریں:
           </label>
           <select
-            className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500"
+            className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             value={selectedHalqa?.id || ""}
             onChange={(e) =>
               setSelectedHalqa(
@@ -116,127 +115,140 @@ export default function ApKaHalqa() {
         </div>
       )}
 
-      {/* Halqa Details */}
-      {selectedHalqa && (
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden border"
-        >
-          {/* Image */}
-          <div className="h-52 sm:h-64 overflow-hidden">
-            <img
-              src={selectedHalqa.image || placeholder}
-              alt={selectedHalqa.area}
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Info */}
-          <div className="p-5 space-y-3 text-sm sm:text-base">
-            <h3 className="text-xl font-bold text-slate-900">
-              {selectedHalqa.area}{" "}
-              <span className="text-emerald-600">({selectedHalqa.number})</span>
-            </h3>
-            <p className="text-slate-700">{selectedHalqa.markaz}</p>
-
-            <div className="flex items-center gap-2 text-slate-600">
-              <MapPin className="w-4 h-4" /> {selectedHalqa.location}
-            </div>
-            <div className="flex items-center gap-2 text-slate-600">
-              <Phone className="w-4 h-4" /> {selectedHalqa.contact}
-            </div>
-            <div className="flex items-center gap-2 text-slate-600">
-              <Clock className="w-4 h-4" /> {selectedHalqa.hours}
-            </div>
-            <p>
-              <strong>امیر:</strong> {selectedHalqa.ameer}
-            </p>
-
-            <div className="flex gap-3 pt-3">
-              <button
-                onClick={() => setShowModal(true)}
-                className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
-              >
-                مزید معلومات
-              </button>
-              <a
-                href={`tel:${selectedHalqa.contact}`}
-                className="flex-1 px-4 py-2 rounded-lg border hover:bg-gray-50 text-center"
-              >
-                کال کریں
-              </a>
-            </div>
-          </div>
-        </motion.div>
-      )}
-
-      {/* Modal */}
-      {showModal && selectedHalqa && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          ref={dialogRef}
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-        >
-          {/* Overlay */}
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setShowModal(false)}
-          />
+      {/* Halqa Card */}
+      <AnimatePresence>
+        {selectedHalqa && (
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="relative max-w-lg w-full bg-white rounded-2xl shadow-2xl overflow-hidden"
+            key={selectedHalqa.id}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border"
           >
-            {/* Header */}
-            <div className="flex justify-between items-center p-4 border-b">
-              <h3 className="text-lg font-bold text-slate-900">
-                {selectedHalqa.area} ({selectedHalqa.number})
-              </h3>
-              <button
-                onClick={() => setShowModal(false)}
-                className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
-              >
-                <X className="w-5 h-5 text-slate-600" />
-              </button>
-            </div>
-
-            {/* Map */}
-            <div className="h-64 w-full">
-              <iframe
-                src={googleMapsSrc(
-                  selectedHalqa.coords.lat,
-                  selectedHalqa.coords.lng
-                )}
-                className="w-full h-full border-0"
-                loading="lazy"
+            {/* Image */}
+            <div className="h-52 sm:h-64 md:h-72 overflow-hidden">
+              <img
+                src={selectedHalqa.image || placeholder}
+                alt={selectedHalqa.area}
+                className="w-full h-full object-cover"
               />
             </div>
 
-            {/* Footer buttons */}
-            <div className="flex gap-3 p-4">
-              <button
-                onClick={() =>
-                  openDirections(
-                    selectedHalqa.coords.lat,
-                    selectedHalqa.coords.lng
-                  )
-                }
-                className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700"
-              >
-                راستہ
-              </button>
-              <a
-                href={`tel:${selectedHalqa.contact}`}
-                className="flex-1 px-4 py-2 rounded-lg border hover:bg-gray-50 text-center"
-              >
-                کال کریں
-              </a>
+            {/* Info */}
+            <div className="p-6 space-y-3 text-sm sm:text-base">
+              <h3 className="text-xl font-bold text-slate-900">
+                {selectedHalqa.area}{" "}
+                <span className="text-emerald-600">({selectedHalqa.number})</span>
+              </h3>
+              <p className="text-slate-700">{selectedHalqa.markaz}</p>
+
+              <div className="flex items-center gap-2 text-slate-600">
+                <MapPin className="w-4 h-4 shrink-0" /> {selectedHalqa.location}
+              </div>
+              <div className="flex items-center gap-2 text-slate-600">
+                <Phone className="w-4 h-4 shrink-0" /> {selectedHalqa.contact}
+              </div>
+              <div className="flex items-center gap-2 text-slate-600">
+                <Clock className="w-4 h-4 shrink-0" /> {selectedHalqa.hours}
+              </div>
+              <p>
+                <strong>امیر:</strong> {selectedHalqa.ameer}
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
+                >
+                  مزید معلومات
+                </button>
+                <a
+                  href={`tel:${selectedHalqa.contact}`}
+                  className="flex-1 px-4 py-2 rounded-lg border hover:bg-gray-50 text-center transition"
+                >
+                  کال کریں
+                </a>
+              </div>
             </div>
           </motion.div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {showModal && selectedHalqa && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            ref={dialogRef}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          >
+            {/* Overlay */}
+            <div
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              onClick={() => setShowModal(false)}
+            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative max-w-lg w-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]"
+            >
+              {/* Header */}
+              <div className="flex justify-between items-center p-4 border-b">
+                <h3 className="text-lg font-bold text-slate-900 truncate">
+                  {selectedHalqa.area} ({selectedHalqa.number})
+                </h3>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+                >
+                  <X className="w-5 h-5 text-slate-600" />
+                </button>
+              </div>
+
+              {/* Scrollable content */}
+              <div className="flex-1 overflow-y-auto">
+                {/* Map */}
+                <div className="h-64 w-full">
+                  <iframe
+                    src={googleMapsSrc(
+                      selectedHalqa.coords.lat,
+                      selectedHalqa.coords.lng
+                    )}
+                    className="w-full h-full border-0"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Footer buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 p-4 border-t">
+                <button
+                  onClick={() =>
+                    openDirections(
+                      selectedHalqa.coords.lat,
+                      selectedHalqa.coords.lng
+                    )
+                  }
+                  className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
+                >
+                  راستہ
+                </button>
+                <a
+                  href={`tel:${selectedHalqa.contact}`}
+                  className="flex-1 px-4 py-2 rounded-lg border hover:bg-gray-50 text-center transition"
+                >
+                  کال کریں
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

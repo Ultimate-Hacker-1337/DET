@@ -6,154 +6,233 @@ import bg from "../../assets/bg.avif";
 import bg3 from "../../assets/bg3.avif";
 import placeholder from "../../assets/logo.avif";
 
-// Halqaat Data
-const halqaat = [
-  {
-    id: 1,
-    city: "مظفرآباد",
-    area: "پتیکا",
-    number: "Halqa-01",
-    markaz: "Markaz مظفرآباد",
-    location: "پتیکا مرکزی مسجد",
-    contact: "0300-1111111",
-    ameer: "مولانا احمد",
-    coords: { lat: 34.371, lng: 73.471 },
-    image: bg,
-    hours: "روزانہ: بعد نماز عصر",
-  },
-  {
-    id: 2,
-    city: "مظفرآباد",
-    area: "گڑھی دوپٹہ",
-    number: "Halqa-02",
-    markaz: "Markaz مظفرآباد",
-    location: "گڑھی دوپٹہ جامع مسجد",
-    contact: "0301-2222222",
-    ameer: "مولانا بلال",
-    coords: { lat: 34.291, lng: 73.561 },
-    image: bg3,
-    hours: "جمعہ: بعد نماز جمعہ",
-  },
-  {
-    id: 3,
-    city: "نیلم",
-    area: "شاردہ",
-    number: "Halqa-03",
-    markaz: "Markaz نیلم",
-    location: "شاردہ مرکزی جامع مسجد",
-    contact: "0302-3333333",
-    ameer: "مولانا قاسم",
-    coords: { lat: 34.807, lng: 74.354 },
-    image: bg,
-    hours: "اتوار: 10am - 1pm",
-  },
-  {
-    id: 4,
-    city: "نیلم",
-    area: "کیل",
-    number: "Halqa-04",
-    markaz: "Markaz نیلم",
-    location: "کیل جامع مسجد",
-    contact: "0303-4444444",
-    ameer: "مولانا زاہد",
-    coords: { lat: 34.823, lng: 74.081 },
-    image: bg3,
-    hours: "بدھ: بعد نماز عشاء",
-  },
-  {
-    id: 5,
-    city: "باغ",
-    area: "ریڑہ",
-    number: "Halqa-05",
-    markaz: "Markaz باغ",
-    location: "ریڑہ جامع مسجد",
-    contact: "0304-5555555",
-    ameer: "مولانا عثمان",
-    coords: { lat: 33.977, lng: 73.764 },
-    image: bg,
-    hours: "جمعرات: بعد نماز مغرب",
-  },
-  {
-    id: 6,
-    city: "پونچھ",
-    area: "راولاکوٹ",
-    number: "Halqa-06",
-    markaz: "Markaz پونچھ",
-    location: "راولاکوٹ مرکزی مسجد",
-    contact: "0305-6666666",
-    ameer: "مولانا طاہر",
-    coords: { lat: 33.857, lng: 73.764 },
-    image: bg3,
-    hours: "ہفتہ: بعد نماز فجر",
-  },
-  {
-    id: 7,
-    city: "سدھنوتی",
-    area: "پلندری",
-    number: "Halqa-07",
-    markaz: "Markaz سدھنوتی",
-    location: "پلندری جامع مسجد",
-    contact: "0306-7777777",
-    ameer: "مولانا عدنان",
-    coords: { lat: 33.717, lng: 73.683 },
-    image: bg,
-    hours: "روزانہ: بعد نماز عشاء",
-  },
-  {
-    id: 8,
-    city: "کوٹلی",
-    area: "کھوئی رٹہ",
-    number: "Halqa-08",
-    markaz: "Markaz کوٹلی",
-    location: "کھوئی رٹہ جامع مسجد",
-    contact: "0307-8888888",
-    ameer: "مولانا امجد",
-    coords: { lat: 33.515, lng: 74.078 },
-    image: bg3,
-    hours: "منگل: بعد نماز عصر",
-  },
-  {
-    id: 9,
-    city: "میرپور",
-    area: "چکسواری",
-    number: "Halqa-09",
-    markaz: "Markaz میرپور",
-    location: "چکسواری جامع مسجد",
-    contact: "0308-9999999",
-    ameer: "مولانا انیس",
-    coords: { lat: 33.133, lng: 73.75 },
-    image: bg,
-    hours: "جمعہ: بعد نماز عشاء",
-  },
-  {
-    id: 10,
-    city: "بھمبر",
-    area: "برنالہ",
-    number: "Halqa-10",
-    markaz: "Markaz بھمبر",
-    location: "برنالہ مرکزی جامع مسجد",
-    contact: "0309-1010101",
-    ameer: "مولانا فہد",
-    coords: { lat: 32.976, lng: 74.078 },
-    image: bg3,
-    hours: "اتوار: بعد نماز عصر",
-  },
-];
+/**
+ * نوٹ:
+ * - تمام دکھنے والی ٹیکسٹس اردو میں ہیں۔
+ * - تصاویر: صرف bg اور bg3 استعمال ہو رہی ہیں۔
+ * - اگر آپ الگ JSON فائل رکھنا چاہیں تو اس array کو باہر نکال کر import کریں۔
+ */
 
-// Google Maps Embed
+/* ---------------------------
+   ڈیٹا (Urdu)
+   countries -> halkas -> cities -> towns
+   --------------------------- */
+const data = {
+  countries: [
+    {
+      id: 1,
+      name: "پاکستان",
+      halkas: [
+        {
+          id: 1,
+          name: "حلقہ-01",
+          ameer: "مولانا احمد",
+          timing: "روزانہ: بعد نماز عصر",
+          marker: { lat: 33.6844, lng: 73.0479 },
+          mapLocation: "جامع مسجد المحمود، جی-10 اسلام آباد",
+          contact: "0300-1111111",
+          notes: "یہ حلقہ اسلام آباد اور نزدیکہ علاقوں کو کور کرتا ہے۔",
+          cities: [
+            {
+              id: 1,
+              name: "اسلام آباد",
+              towns: ["جی-10", "جی-11", "جی-12", "آئی-8", "آئی-9", "آئی-10", "ممتاز سٹی"]
+            },
+            {
+              id: 2,
+              name: "راولپنڈی",
+              towns: ["سدر", "چاندنی چوک", "کمیٹی چوک", "ٹینچ بھٹہ"]
+            }
+          ]
+        },
+        {
+          id: 2,
+          name: "حلقہ-02",
+          ameer: "مولانا بلال",
+          timing: "جمعہ: بعد نماز عشاء",
+          marker: { lat: 34.0151, lng: 71.5249 },
+          mapLocation: "جامع مسجد قصابان، پشاور",
+          contact: "0301-2222222",
+          notes: "پشاور اور قریبی علاقے",
+          cities: [
+            {
+              id: 3,
+              name: "پشاور",
+              towns: ["یونیورسٹی ٹاؤن", "حیات آباد", "کوہاتی گیٹ"]
+            },
+            {
+              id: 4,
+              name: "چارسدہ",
+              towns: ["اُتمانزئی", "رجّڑ"]
+            }
+          ]
+        },
+        {
+          id: 3,
+          name: "حلقہ-03",
+          ameer: "مولانا قاسم",
+          timing: "اتوار: 10am - 1pm",
+          marker: { lat: 24.8607, lng: 67.0011 },
+          mapLocation: "جامع مسجد طیبہ، کراچی",
+          contact: "0302-3333333",
+          notes: "کراچی کے مختلف علاقوں کا حلقہ",
+          cities: [
+            {
+              id: 5,
+              name: "کراچی",
+              towns: ["ناظم آباد", "کورنگی", "گلشنِ اقبال", "لائنڈی"]
+            }
+          ]
+        },
+        {
+          id: 4,
+          name: "حلقہ-04",
+          ameer: "مولانا سلیم",
+          timing: "ہفتہ: بعد نماز مغرب",
+          marker: { lat: 32.0836, lng: 72.6711 },
+          mapLocation: "مرکز جامع مسجد، سرگودھا",
+          contact: "0303-4444444",
+          notes: "سرگودھا اور آس پاس",
+          cities: [
+            {
+              id: 6,
+              name: "سرگودھا",
+              towns: ["سیٹلائٹ ٹاؤن", "کوٹ فرید", "جناح کالونی"]
+            }
+          ]
+        },
+        {
+          id: 5,
+          name: "حلقہ-05",
+          ameer: "مولانا یوسف",
+          timing: "پیر: بعد نماز عشاء",
+          marker: { lat: 31.5204, lng: 74.3587 },
+          mapLocation: "مرکز جامع مسجد، لاہور",
+          contact: "0304-5555555",
+          notes: "لاہور حلقہ",
+          cities: [
+            {
+              id: 7,
+              name: "لاہور",
+              towns: ["ماڈل ٹاؤن", "اقبال ٹاؤن", "جوہر ٹاؤن", "شاہدرہ"]
+            }
+          ]
+        },
+        {
+          id: 6,
+          name: "حلقہ-06",
+          ameer: "مولانا عارف",
+          timing: "منگل: بعد نماز مغرب",
+          marker: { lat: 30.1575, lng: 71.5249 },
+          mapLocation: "جامع مسجد خیرالمدارس، ملتان",
+          contact: "0305-6666666",
+          notes: "ملتان کا علاقہ",
+          cities: [
+            {
+              id: 8,
+              name: "ملتان",
+              towns: ["کینٹ", "نیو ملتان", "شاہ رکنِ عالم"]
+            }
+          ]
+        },
+        {
+          id: 7,
+          name: "حلقہ-07",
+          ameer: "مولانا طارق",
+          timing: "جمعرات: بعد نماز عشاء",
+          marker: { lat: 31.5820, lng: 73.0551 },
+          mapLocation: "جامع مسجد مدینہ، فیصل آباد",
+          contact: "0306-7777777",
+          notes: "فیصل آباد اور گردونواح",
+          cities: [
+            {
+              id: 9,
+              name: "فیصل آباد",
+              towns: ["جناح کالونی", "پیپلز کالونی", "مدینہ ٹاؤن"]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 2,
+      name: "ملائیشیا",
+      halkas: [
+        {
+          id: 1,
+          name: "حلقہ-01",
+          ameer: "استاذ احمد",
+          timing: "جمعہ: 7pm",
+          marker: { lat: 3.1390, lng: 101.6869 },
+          mapLocation: "مسجد نگارا، کوالالمپور",
+          contact: "+60-300-000000",
+          notes: "نمونہ حلقہ (ملائیشیا)",
+          cities: [
+            {
+              id: 1,
+              name: "کوالالمپور",
+              towns: ["بکِت بنتانگ"]
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 3,
+      name: "جنوبی افریقہ",
+      halkas: [
+        {
+          id: 1,
+          name: "حلقہ-01",
+          ameer: "شیخ موسیٰ",
+          timing: "اتوار: ظہر کے بعد",
+          marker: { lat: -26.2041, lng: 28.0473 },
+          mapLocation: "مسجد النور، جوہانسبرگ",
+          contact: "+27-11-000-0000",
+          notes: "نمونہ حلقہ (جنوبی افریقہ)",
+          cities: [
+            {
+              id: 1,
+              name: "جوہانسبرگ",
+              towns: ["سینڈٹن"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+/* ---------------------------
+   Utilities
+   --------------------------- */
 const googleMapsSrc = (lat, lng, zoom = 15) =>
   `https://www.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed`;
 
+/* ---------------------------
+   Component
+   --------------------------- */
 export default function ApKaHalqa() {
-  const [selectedCity, setSelectedCity] = useState("");
-  const [selectedHalqa, setSelectedHalqa] = useState(null);
+  const [selectedCountryId, setSelectedCountryId] = useState("");
+  const [selectedHalkaId, setSelectedHalkaId] = useState("");
+  const [selectedCityId, setSelectedCityId] = useState("");
+  const [selectedTown, setSelectedTown] = useState("");
+  const [selectedHalka, setSelectedHalka] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const dialogRef = useRef(null);
 
-  const cities = [...new Set(halqaat.map((h) => h.city))];
-  const filteredHalqaat = halqaat.filter((h) => h.city === selectedCity);
+  // Derived lists
+  const countries = data.countries;
+  const selectedCountry = countries.find((c) => c.id === Number(selectedCountryId)) || null;
+  const halkas = selectedCountry ? selectedCountry.halkas : [];
+  const selectedHalkaObj = halkas.find((h) => h.id === Number(selectedHalkaId)) || null;
+  const cities = selectedHalkaObj ? selectedHalkaObj.cities : [];
+  const selectedCityObj = cities.find((ct) => ct.id === Number(selectedCityId)) || null;
+  const towns = selectedCityObj ? selectedCityObj.towns : [];
 
-  // ESC to close modal
+  // Close modal with ESC
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") setShowModal(false);
@@ -162,6 +241,11 @@ export default function ApKaHalqa() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // update selectedHalka (for card/modal) whenever halka selection changes
+  useEffect(() => {
+    setSelectedHalka(selectedHalkaObj);
+  }, [selectedHalkaObj]);
+
   const openDirections = useCallback((lat, lng) => {
     window.open(
       `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
@@ -169,119 +253,191 @@ export default function ApKaHalqa() {
     );
   }, []);
 
+  // pick image (bg/bg3 alternation)
+  const getImageForHalka = (halkaId) => {
+    if (!halkaId) return placeholder;
+    return halkaId % 2 === 1 ? bg : bg3;
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-t from-yellow-50 via-white to-emerald-50 py-12 px-4 sm:px-6 lg:px-12 flex flex-col">
-      <h2 className="text-3xl md:text-4xl font-extrabold text-center text-emerald-800 mb-10">
+    <div className="min-h-screen bg-gradient-to-t from-yellow-50 via-white to-emerald-50 py-8 px-4 sm:px-6 lg:px-12 flex flex-col">
+      <h2 className="text-3xl md:text-4xl font-extrabold text-center text-emerald-800 mb-8">
         آپ کا حلقہ
       </h2>
 
-      {/* City Select */}
-      <div className="max-w-md mx-auto mb-6">
-        <label className="block mb-2 font-medium text-slate-700">
-          شہر منتخب کریں:
-        </label>
-        <select
-          className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-          value={selectedCity}
-          onChange={(e) => {
-            setSelectedCity(e.target.value);
-            setSelectedHalqa(null);
-          }}
-        >
-          <option value="">--- شہر منتخب کریں ---</option>
-          {cities.map((city) => (
-            <option key={city}>{city}</option>
-          ))}
-        </select>
-      </div>
-
-      {/* Area Select */}
-      {selectedCity && (
-        <div className="max-w-md mx-auto mb-10">
-          <label className="block mb-2 font-medium text-slate-700">
-            علاقہ منتخب کریں:
-          </label>
+      {/* Dropdowns */}
+      <div className="max-w-3xl w-full mx-auto grid gap-4 sm:grid-cols-2">
+        {/* Country */}
+        <div>
+          <label className="block mb-2 font-medium text-slate-700">ملک منتخب کریں:</label>
           <select
             className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            value={selectedHalqa?.id || ""}
-            onChange={(e) =>
-              setSelectedHalqa(
-                filteredHalqaat.find((h) => h.id === Number(e.target.value))
-              )
-            }
+            value={selectedCountryId}
+            onChange={(e) => {
+              setSelectedCountryId(e.target.value);
+              setSelectedHalkaId("");
+              setSelectedCityId("");
+              setSelectedTown("");
+              setSelectedHalka(null);
+            }}
           >
-            <option value="">--- علاقہ منتخب کریں ---</option>
-            {filteredHalqaat.map((h) => (
-              <option key={h.id} value={h.id}>
-                {h.area} ({h.number})
+            <option value="">--- ملک منتخب کریں ---</option>
+            {countries.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
               </option>
             ))}
           </select>
         </div>
-      )}
 
-      {/* Halqa Card */}
-      <AnimatePresence>
-        {selectedHalqa && (
-          <motion.div
-            key={selectedHalqa.id}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border"
+        {/* Halka */}
+        <div>
+          <label className="block mb-2 font-medium text-slate-700">حلقہ منتخب کریں:</label>
+          <select
+            className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            value={selectedHalkaId}
+            onChange={(e) => {
+              setSelectedHalkaId(e.target.value);
+              setSelectedCityId("");
+              setSelectedTown("");
+            }}
+            disabled={!selectedCountry}
           >
-            {/* Image */}
-            <div className="h-52 sm:h-64 md:h-72 overflow-hidden">
-              <img
-                src={selectedHalqa.image || placeholder}
-                alt={selectedHalqa.area}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <option value="">--- حلقہ منتخب کریں ---</option>
+            {halkas.map((h) => (
+              <option key={h.id} value={h.id}>
+                {h.name} — {h.mapLocation}
+              </option>
+            ))}
+          </select>
+        </div>
 
-            {/* Info */}
-            <div className="p-6 space-y-3 text-sm sm:text-base">
-              <h3 className="text-xl font-bold text-slate-900">
-                {selectedHalqa.area}{" "}
-                <span className="text-emerald-600">({selectedHalqa.number})</span>
-              </h3>
-              <p className="text-slate-700">{selectedHalqa.markaz}</p>
+        {/* City */}
+        <div>
+          <label className="block mb-2 font-medium text-slate-700">شہر منتخب کریں:</label>
+          <select
+            className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            value={selectedCityId}
+            onChange={(e) => {
+              setSelectedCityId(e.target.value);
+              setSelectedTown("");
+            }}
+            disabled={!selectedHalkaObj}
+          >
+            <option value="">--- شہر منتخب کریں ---</option>
+            {cities.map((ct) => (
+              <option key={ct.id} value={ct.id}>
+                {ct.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-              <div className="flex items-center gap-2 text-slate-600">
-                <MapPin className="w-4 h-4 shrink-0" /> {selectedHalqa.location}
-              </div>
-              <div className="flex items-center gap-2 text-slate-600">
-                <Phone className="w-4 h-4 shrink-0" /> {selectedHalqa.contact}
-              </div>
-              <div className="flex items-center gap-2 text-slate-600">
-                <Clock className="w-4 h-4 shrink-0" /> {selectedHalqa.hours}
-              </div>
-              <p>
-                <strong>امیر:</strong> {selectedHalqa.ameer}
-              </p>
+        {/* Town */}
+        <div>
+          <label className="block mb-2 font-medium text-slate-700">علاقہ / ٹاؤن منتخب کریں:</label>
+          <select
+            className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            value={selectedTown}
+            onChange={(e) => setSelectedTown(e.target.value)}
+            disabled={!selectedCityObj}
+          >
+            <option value="">--- علاقہ منتخب کریں ---</option>
+            {towns.map((t, i) => (
+              <option key={i} value={t}>
+                {t}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                <button
-                  onClick={() => setShowModal(true)}
-                  className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
-                >
-                  مزید معلومات
-                </button>
-                <a
-                  href={`tel:${selectedHalqa.contact}`}
-                  className="flex-1 px-4 py-2 rounded-lg border hover:bg-gray-50 text-center transition"
-                >
-                  کال کریں
-                </a>
+      {/* Selected Halka Card */}
+      <div className="mt-8 max-w-3xl mx-auto w-full">
+        <AnimatePresence>
+          {selectedHalka && (
+            <motion.div
+              key={selectedHalka.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden border"
+            >
+              {/* Image */}
+              <div className="h-48 sm:h-56 md:h-64 overflow-hidden">
+                <img
+                  src={getImageForHalka(selectedHalka.id)}
+                  alt={selectedHalka.name}
+                  className="w-full h-full object-cover"
+                />
               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+              {/* Info */}
+              <div className="p-5 space-y-3 text-sm sm:text-base">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900">
+                      {selectedHalka.name} — <span className="text-emerald-600">{selectedCountry?.name}</span>
+                    </h3>
+                    <p className="text-slate-700 mt-1">{selectedHalka.mapLocation}</p>
+                  </div>
+
+                  <div className="text-right">
+                    <p className="text-slate-600 text-sm"><strong>امیر:</strong></p>
+                    <p className="text-slate-900 font-medium">{selectedHalka.ameer}</p>
+                    <p className="mt-2 text-slate-600 text-sm"><strong>اوقات:</strong></p>
+                    <p className="text-slate-900 font-medium">{selectedHalka.timing}</p>
+                  </div>
+                </div>
+
+                <div className="grid gap-2 sm:grid-cols-3">
+                  <div className="flex items-center gap-2 text-slate-600">
+                    <MapPin className="w-4 h-4" /> {selectedHalka.mapLocation}
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-600">
+                    <Phone className="w-4 h-4" /> {selectedHalka.contact || "ن/ا"}
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-600">
+                    <Clock className="w-4 h-4" /> {selectedHalka.timing}
+                  </div>
+                </div>
+
+                {/* Cities / Towns preview */}
+                <div>
+                  <h4 className="font-medium text-slate-800 mb-2">شہر اور علاقے:</h4>
+                  <ul className="list-disc list-inside text-slate-700 space-y-1">
+                    {selectedHalka.cities.map((ct) => (
+                      <li key={ct.id}>
+                        <strong>{ct.name}:</strong>{" "}
+                        <span className="text-slate-600">{ct.towns.join("، ")}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-3">
+                  <button
+                    onClick={() => setShowModal(true)}
+                    className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
+                  >
+                    مزید معلومات
+                  </button>
+                  <a
+                    href={`tel:${selectedHalka.contact || ""}`}
+                    className="flex-1 px-4 py-2 rounded-lg border text-center hover:bg-gray-50 transition"
+                  >
+                    کال کریں
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* Modal */}
       <AnimatePresence>
-        {showModal && selectedHalqa && (
+        {showModal && selectedHalka && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -291,22 +447,24 @@ export default function ApKaHalqa() {
             ref={dialogRef}
             className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4"
           >
-            {/* Overlay */}
+            {/* overlay */}
             <div
               className="absolute inset-0 bg-black/50 backdrop-blur-sm"
               onClick={() => setShowModal(false)}
             />
+
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[95vh]"
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative w-full max-w-xl bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[94vh]"
             >
-              {/* Header */}
-              <div className="flex justify-between items-center p-4 border-b bg-emerald-50">
-                <h3 className="text-lg font-bold text-slate-900 truncate">
-                  {selectedHalqa.area} ({selectedHalqa.number})
-                </h3>
+              {/* header */}
+              <div className="flex items-center justify-between p-4 border-b bg-emerald-50">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">{selectedHalka.name}</h3>
+                  <p className="text-slate-700 text-sm">{selectedHalka.mapLocation}</p>
+                </div>
                 <button
                   onClick={() => setShowModal(false)}
                   className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
@@ -315,77 +473,89 @@ export default function ApKaHalqa() {
                 </button>
               </div>
 
-              {/* Scrollable content */}
+              {/* content */}
               <div className="flex-1 overflow-y-auto">
                 {/* Image */}
-                <div className="h-40 sm:h-56 md:h-64">
+                <div className="h-44 sm:h-56 md:h-64">
                   <img
-                    src={selectedHalqa.image || placeholder}
-                    alt={selectedHalqa.area}
+                    src={getImageForHalka(selectedHalka.id)}
+                    alt={selectedHalka.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
 
-                {/* Details */}
-                <div className="p-5 space-y-3 text-sm sm:text-base">
+                {/* details */}
+                <div className="p-4 space-y-3 text-sm sm:text-base">
                   <div className="flex items-center gap-2 text-slate-700">
-                    <Home className="w-4 h-4 shrink-0" />
-                    <span className="font-medium">شہر:</span>{" "}
-                    {selectedHalqa.city}
+                    <Home className="w-4 h-4" />
+                    <span className="font-medium">ملک:</span> <span className="mr-2">{selectedCountry?.name}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-slate-700">
-                    <MapPin className="w-4 h-4 shrink-0" />
-                    <span className="font-medium">مقام:</span>{" "}
-                    {selectedHalqa.location}
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-700">
-                    <Phone className="w-4 h-4 shrink-0" />
-                    <span className="font-medium">رابطہ:</span>{" "}
-                    {selectedHalqa.contact}
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-700">
-                    <Clock className="w-4 h-4 shrink-0" />
-                    <span className="font-medium">اوقات:</span>{" "}
-                    {selectedHalqa.hours}
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-700">
-                    <User className="w-4 h-4 shrink-0" />
-                    <span className="font-medium">امیر:</span>{" "}
-                    {selectedHalqa.ameer}
-                  </div>
-                  <p className="text-slate-600">
-                    <strong>مرکز:</strong> {selectedHalqa.markaz}
-                  </p>
-                </div>
 
-                {/* Map */}
-                <div className="h-56 w-full border-t">
-                  <iframe
-                    src={googleMapsSrc(
-                      selectedHalqa.coords.lat,
-                      selectedHalqa.coords.lng
-                    )}
-                    className="w-full h-full border-0"
-                    loading="lazy"
-                  />
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <MapPin className="w-4 h-4" />
+                    <span className="font-medium">مقام:</span> {selectedHalka.mapLocation}
+                  </div>
+
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <Phone className="w-4 h-4" />
+                    <span className="font-medium">رابطہ:</span> {selectedHalka.contact || "ن/ا"}
+                  </div>
+
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <Clock className="w-4 h-4" />
+                    <span className="font-medium">اوقاتِ ملاقات:</span> {selectedHalka.timing}
+                  </div>
+
+                  <div className="flex items-center gap-2 text-slate-700">
+                    <User className="w-4 h-4" />
+                    <span className="font-medium">امیر:</span> {selectedHalka.ameer}
+                  </div>
+
+                  {selectedHalka.notes && (
+                    <p className="text-slate-600"><strong>نوٹس:</strong> {selectedHalka.notes}</p>
+                  )}
+
+                  {/* cities & towns (expandable list) */}
+                  <div>
+                    <h4 className="font-semibold mb-2">شہروں اور علاقوں کی تفصیل:</h4>
+                    <div className="space-y-3">
+                      {selectedHalka.cities.map((ct) => (
+                        <div key={ct.id} className="p-3 bg-gray-50 rounded-lg">
+                          <div className="flex items-center justify-between">
+                            <div className="font-medium text-slate-800">{ct.name}</div>
+                          </div>
+                          <div className="mt-2 text-slate-600">
+                            <strong>علاقے:</strong> {ct.towns.join("، ")}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* map */}
+                  <div className="mt-3 h-56 w-full border rounded-md overflow-hidden">
+                    <iframe
+                      src={googleMapsSrc(selectedHalka.marker.lat, selectedHalka.marker.lng)}
+                      className="w-full h-full border-0"
+                      loading="lazy"
+                      title={`${selectedHalka.name} نقشہ`}
+                    />
+                  </div>
                 </div>
               </div>
 
-              {/* Footer buttons */}
+              {/* footer actions */}
               <div className="flex flex-col sm:flex-row gap-3 p-4 border-t bg-gray-50">
                 <button
                   onClick={() =>
-                    openDirections(
-                      selectedHalqa.coords.lat,
-                      selectedHalqa.coords.lng
-                    )
+                    openDirections(selectedHalka.marker.lat, selectedHalka.marker.lng)
                   }
                   className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
                 >
-                  راستہ
+                  راستہ لائیں
                 </button>
                 <a
-                  href={`tel:${selectedHalqa.contact}`}
+                  href={`tel:${selectedHalka.contact || ""}`}
                   className="flex-1 px-4 py-2 rounded-lg border hover:bg-gray-100 text-center transition"
                 >
                   کال کریں
@@ -397,5 +567,4 @@ export default function ApKaHalqa() {
       </AnimatePresence>
     </div>
   );
-                    }
-      
+}

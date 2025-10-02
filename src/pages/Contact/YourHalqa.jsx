@@ -7,15 +7,14 @@ import bg3 from "../../assets/bg3.avif";
 import placeholder from "../../assets/logo.avif";
 
 /**
- * نوٹ:
- * - تمام دکھنے والی ٹیکسٹس اردو میں ہیں۔
- * - تصاویر: صرف bg اور bg3 استعمال ہو رہی ہیں۔
- * - اگر آپ الگ JSON فائل رکھنا چاہیں تو اس array کو باہر نکال کر import کریں۔
+ * ApKaHalqa - Updated to focus on "تلاشِ حلقہ" (find your halka)
+ * - User: select country, type city (with suggestions), type town (with suggestions), then click "دریافت کریں"
+ * - Results: list of halkas that match the city+town within the selected country
+ * - All visible text (labels, options) are in Urdu
  */
 
 /* ---------------------------
-   ڈیٹا (Urdu)
-   countries -> halkas -> cities -> towns
+   DATA (Urdu) — countries -> halkas -> cities -> towns
    --------------------------- */
 const data = {
   countries: [
@@ -41,7 +40,7 @@ const data = {
             {
               id: 2,
               name: "راولپنڈی",
-              towns: ["سدر", "چاندنی چوک", "کمیٹی چوک", "ٹینچ بھٹہ"]
+              towns: ["صدر", "چاندنی چوک", "کمیٹی چوک", "ٹینچ بھٹہ"]
             }
           ]
         },
@@ -63,7 +62,7 @@ const data = {
             {
               id: 4,
               name: "چارسدہ",
-              towns: ["اُتمانزئی", "رجّڑ"]
+              towns: ["اُتمانزئی", "رجڑ"]
             }
           ]
         },
@@ -206,33 +205,51 @@ const data = {
 };
 
 /* ---------------------------
-   Utilities
+   Helpers
    --------------------------- */
 const googleMapsSrc = (lat, lng, zoom = 15) =>
   `https://www.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed`;
+
+// normalize string for search (trim)
+const normalize = (s) => (s || "").trim();
 
 /* ---------------------------
    Component
    --------------------------- */
 export default function ApKaHalqa() {
   const [selectedCountryId, setSelectedCountryId] = useState("");
-  const [selectedHalkaId, setSelectedHalkaId] = useState("");
-  const [selectedCityId, setSelectedCityId] = useState("");
-  const [selectedTown, setSelectedTown] = useState("");
+  const [cityInput, setCityInput] = useState("");
+  const [townInput, setTownInput] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [selectedHalka, setSelectedHalka] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const dialogRef = useRef(null);
 
-  // Derived lists
+  // derived
   const countries = data.countries;
   const selectedCountry = countries.find((c) => c.id === Number(selectedCountryId)) || null;
-  const halkas = selectedCountry ? selectedCountry.halkas : [];
-  const selectedHalkaObj = halkas.find((h) => h.id === Number(selectedHalkaId)) || null;
-  const cities = selectedHalkaObj ? selectedHalkaObj.cities : [];
-  const selectedCityObj = cities.find((ct) => ct.id === Number(selectedCityId)) || null;
-  const towns = selectedCityObj ? selectedCityObj.towns : [];
 
-  // Close modal with ESC
+  // gather suggestion lists (unique city names & towns within selected country)
+  const availableCities = React.useMemo(() => {
+    if (!selectedCountry) return [];
+    const set = new Set();
+    selectedCountry.halkas.forEach((h) => {
+      h.cities.forEach((ct) => set.add(ct.name));
+    });
+    return Array.from(set);
+  }, [selectedCountry]);
+
+  const availableTowns = React.useMemo(() => {
+    if (!selectedCountry) return [];
+    const set = new Set();
+    selectedCountry.halkas.forEach((h) =>
+      h.cities.forEach((ct) => ct.towns.forEach((t) => set.add(t)))
+    );
+    return Array.from(set);
+  }, [selectedCountry]);
+
+  // ESC closes modal
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") setShowModal(false);
@@ -241,10 +258,49 @@ export default function ApKaHalqa() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // update selectedHalka (for card/modal) whenever halka selection changes
-  useEffect(() => {
-    setSelectedHalka(selectedHalkaObj);
-  }, [selectedHalkaObj]);
+  // search function
+  const handleSearch = () => {
+    setErrorMsg("");
+    const country = selectedCountry;
+    const cityQ = normalize(cityInput);
+    const townQ = normalize(townInput);
+
+    if (!country) {
+      setErrorMsg("براہ کرم ملک منتخب کریں۔");
+      setSearchResults([]);
+      return;
+    }
+    if (!cityQ) {
+      setErrorMsg("براہ کرم اپنا شہر درج کریں۔");
+      setSearchResults([]);
+      return;
+    }
+    if (!townQ) {
+      setErrorMsg("براہ کرم اپنا علاقہ / ٹاؤن درج کریں۔");
+      setSearchResults([]);
+      return;
+    }
+
+    // find all halkas in the selected country that have a city matching cityQ and town matching townQ
+    const matches = country.halkas.filter((h) =>
+      h.cities.some((ct) => {
+        const cityMatch = ct.name.includes(cityQ) || cityQ.includes(ct.name) || ct.name === cityQ;
+        if (!cityMatch) return false;
+        // town match within that city
+        return ct.towns.some((t) => t.includes(townQ) || townQ.includes(t) || t === townQ);
+      })
+    );
+
+    setSearchResults(matches);
+    if (matches.length === 0) {
+      setErrorMsg("معاف کیجیے — آپ کا حلقہ اس تلاش سے ملتا نہیں۔ براہِ کرم ان پٹ چیک کریں یا قریبی نام آزمائیں۔");
+    }
+  };
+
+  const openDetails = (halka) => {
+    setSelectedHalka(halka);
+    setShowModal(true);
+  };
 
   const openDirections = useCallback((lat, lng) => {
     window.open(
@@ -253,7 +309,6 @@ export default function ApKaHalqa() {
     );
   }, []);
 
-  // pick image (bg/bg3 alternation)
   const getImageForHalka = (halkaId) => {
     if (!halkaId) return placeholder;
     return halkaId % 2 === 1 ? bg : bg3;
@@ -261,181 +316,184 @@ export default function ApKaHalqa() {
 
   return (
     <div className="min-h-screen bg-gradient-to-t from-yellow-50 via-white to-emerald-50 py-8 px-4 sm:px-6 lg:px-12 flex flex-col">
-      <h2 className="text-3xl md:text-4xl font-extrabold text-center text-emerald-800 mb-8">
-        آپ کا حلقہ
+      <h2 className="text-3xl md:text-4xl font-extrabold text-center text-emerald-800 mb-6">
+        اپنا حلقہ معلوم کریں
       </h2>
 
-      {/* Dropdowns */}
-      <div className="max-w-3xl w-full mx-auto grid gap-4 sm:grid-cols-2">
-        {/* Country */}
-        <div>
-          <label className="block mb-2 font-medium text-slate-700">ملک منتخب کریں:</label>
-          <select
-            className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            value={selectedCountryId}
-            onChange={(e) => {
-              setSelectedCountryId(e.target.value);
-              setSelectedHalkaId("");
-              setSelectedCityId("");
-              setSelectedTown("");
-              setSelectedHalka(null);
-            }}
-          >
-            <option value="">--- ملک منتخب کریں ---</option>
-            {countries.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Halka */}
-        <div>
-          <label className="block mb-2 font-medium text-slate-700">حلقہ منتخب کریں:</label>
-          <select
-            className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            value={selectedHalkaId}
-            onChange={(e) => {
-              setSelectedHalkaId(e.target.value);
-              setSelectedCityId("");
-              setSelectedTown("");
-            }}
-            disabled={!selectedCountry}
-          >
-            <option value="">--- حلقہ منتخب کریں ---</option>
-            {halkas.map((h) => (
-              <option key={h.id} value={h.id}>
-                {h.name} — {h.mapLocation}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* City */}
-        <div>
-          <label className="block mb-2 font-medium text-slate-700">شہر منتخب کریں:</label>
-          <select
-            className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            value={selectedCityId}
-            onChange={(e) => {
-              setSelectedCityId(e.target.value);
-              setSelectedTown("");
-            }}
-            disabled={!selectedHalkaObj}
-          >
-            <option value="">--- شہر منتخب کریں ---</option>
-            {cities.map((ct) => (
-              <option key={ct.id} value={ct.id}>
-                {ct.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Town */}
-        <div>
-          <label className="block mb-2 font-medium text-slate-700">علاقہ / ٹاؤن منتخب کریں:</label>
-          <select
-            className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            value={selectedTown}
-            onChange={(e) => setSelectedTown(e.target.value)}
-            disabled={!selectedCityObj}
-          >
-            <option value="">--- علاقہ منتخب کریں ---</option>
-            {towns.map((t, i) => (
-              <option key={i} value={t}>
-                {t}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Selected Halka Card */}
-      <div className="mt-8 max-w-3xl mx-auto w-full">
-        <AnimatePresence>
-          {selectedHalka && (
-            <motion.div
-              key={selectedHalka.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden border"
+      {/* Inputs */}
+      <div className="max-w-3xl mx-auto w-full bg-white p-4 rounded-2xl shadow-sm">
+        <div className="grid gap-4 sm:grid-cols-3">
+          {/* Country */}
+          <div className="sm:col-span-1">
+            <label className="block mb-2 font-medium text-slate-700">ملک</label>
+            <select
+              className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              value={selectedCountryId}
+              onChange={(e) => {
+                setSelectedCountryId(e.target.value);
+                setCityInput("");
+                setTownInput("");
+                setSearchResults([]);
+                setErrorMsg("");
+              }}
             >
-              {/* Image */}
-              <div className="h-48 sm:h-56 md:h-64 overflow-hidden">
-                <img
-                  src={getImageForHalka(selectedHalka.id)}
-                  alt={selectedHalka.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+              <option value="">--- ملک منتخب کریں ---</option>
+              {countries.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-              {/* Info */}
-              <div className="p-5 space-y-3 text-sm sm:text-base">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-slate-900">
-                      {selectedHalka.name} — <span className="text-emerald-600">{selectedCountry?.name}</span>
-                    </h3>
-                    <p className="text-slate-700 mt-1">{selectedHalka.mapLocation}</p>
-                  </div>
+          {/* City (input with datalist) */}
+          <div className="sm:col-span-1">
+            <label className="block mb-2 font-medium text-slate-700">شہر (ٹائپ کریں)</label>
+            <input
+              list="citiesList"
+              className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              placeholder="مثلاً: اسلام آباد"
+              value={cityInput}
+              onChange={(e) => {
+                setCityInput(e.target.value);
+                setSearchResults([]);
+                setErrorMsg("");
+              }}
+              disabled={!selectedCountry}
+            />
+            <datalist id="citiesList">
+              {availableCities.map((name, i) => (
+                <option key={i} value={name} />
+              ))}
+            </datalist>
+          </div>
 
-                  <div className="text-right">
-                    <p className="text-slate-600 text-sm"><strong>امیر:</strong></p>
-                    <p className="text-slate-900 font-medium">{selectedHalka.ameer}</p>
-                    <p className="mt-2 text-slate-600 text-sm"><strong>اوقات:</strong></p>
-                    <p className="text-slate-900 font-medium">{selectedHalka.timing}</p>
-                  </div>
-                </div>
+          {/* Town (input with datalist) */}
+          <div className="sm:col-span-1">
+            <label className="block mb-2 font-medium text-slate-700">علاقہ / ٹاؤن (ٹائپ کریں)</label>
+            <input
+              list="townsList"
+              className="w-full border rounded-xl p-3 shadow-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              placeholder="مثلاً: جی-10"
+              value={townInput}
+              onChange={(e) => {
+                setTownInput(e.target.value);
+                setSearchResults([]);
+                setErrorMsg("");
+              }}
+              disabled={!selectedCountry}
+            />
+            <datalist id="townsList">
+              {availableTowns.map((t, i) => (
+                <option key={i} value={t} />
+              ))}
+            </datalist>
+          </div>
+        </div>
 
-                <div className="grid gap-2 sm:grid-cols-3">
-                  <div className="flex items-center gap-2 text-slate-600">
-                    <MapPin className="w-4 h-4" /> {selectedHalka.mapLocation}
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-600">
-                    <Phone className="w-4 h-4" /> {selectedHalka.contact || "ن/ا"}
-                  </div>
-                  <div className="flex items-center gap-2 text-slate-600">
-                    <Clock className="w-4 h-4" /> {selectedHalka.timing}
-                  </div>
-                </div>
+        {/* Search button and message */}
+        <div className="mt-4 flex flex-col sm:flex-row gap-3 items-stretch">
+          <button
+            onClick={handleSearch}
+            className="px-5 py-3 bg-emerald-600 text-white rounded-xl shadow hover:bg-emerald-700 transition flex-1"
+          >
+            دریافت کریں
+          </button>
+          <button
+            onClick={() => {
+              setSelectedCountryId("");
+              setCityInput("");
+              setTownInput("");
+              setSearchResults([]);
+              setErrorMsg("");
+            }}
+            className="px-5 py-3 border rounded-xl hover:bg-gray-50 transition"
+          >
+            صاف کریں
+          </button>
+        </div>
 
-                {/* Cities / Towns preview */}
-                <div>
-                  <h4 className="font-medium text-slate-800 mb-2">شہر اور علاقے:</h4>
-                  <ul className="list-disc list-inside text-slate-700 space-y-1">
-                    {selectedHalka.cities.map((ct) => (
-                      <li key={ct.id}>
-                        <strong>{ct.name}:</strong>{" "}
-                        <span className="text-slate-600">{ct.towns.join("، ")}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 pt-3">
-                  <button
-                    onClick={() => setShowModal(true)}
-                    className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
-                  >
-                    مزید معلومات
-                  </button>
-                  <a
-                    href={`tel:${selectedHalka.contact || ""}`}
-                    className="flex-1 px-4 py-2 rounded-lg border text-center hover:bg-gray-50 transition"
-                  >
-                    کال کریں
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {errorMsg && <p className="mt-3 text-sm text-rose-600">{errorMsg}</p>}
       </div>
 
-      {/* Modal */}
+      {/* Results */}
+      <div className="max-w-3xl mx-auto w-full mt-6 space-y-4">
+        {searchResults.length > 0 ? (
+          <div>
+            <h3 className="text-lg font-semibold text-slate-800 mb-3">ملا ہوا حلقہ (نتائج):</h3>
+            <div className="grid gap-4">
+              <AnimatePresence>
+                {searchResults.map((h) => (
+                  <motion.div
+                    key={h.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 5 }}
+                    className="bg-white rounded-2xl shadow border overflow-hidden"
+                  >
+                    <div className="flex flex-col sm:flex-row">
+                      <div className="w-full sm:w-48 h-36 overflow-hidden">
+                        <img src={getImageForHalka(h.id)} alt={h.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="p-4 flex-1">
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h4 className="text-md font-bold text-slate-900">{h.name}</h4>
+                            <p className="text-slate-700 text-sm mt-1">{h.mapLocation}</p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-slate-600 text-sm"><strong>امیر:</strong></p>
+                            <p className="text-slate-900 font-medium">{h.ameer}</p>
+                            <p className="text-slate-600 text-sm mt-2"><strong>اوقات:</strong></p>
+                            <p className="text-slate-900 font-medium">{h.timing}</p>
+                          </div>
+                        </div>
+
+                        <div className="mt-3 text-sm text-slate-700">
+                          <strong>شہروں میں:</strong>{" "}
+                          <span className="text-slate-600">
+                            {h.cities.map((c) => c.name).join("، ")}
+                          </span>
+                        </div>
+
+                        <div className="mt-4 flex gap-3">
+                          <button
+                            onClick={() => openDetails(h)}
+                            className="px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
+                          >
+                            مزید معلومات
+                          </button>
+                          <a
+                            href={`tel:${h.contact || ""}`}
+                            className="px-4 py-2 rounded-lg border text-center hover:bg-gray-50 transition"
+                          >
+                            کال کریں
+                          </a>
+                          <button
+                            onClick={() => openDirections(h.marker.lat, h.marker.lng)}
+                            className="px-4 py-2 rounded-lg border text-center hover:bg-gray-50 transition"
+                          >
+                            راستہ
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+        ) : (
+          // If no results and user already searched (errorMsg handles empty case), show helpful tip
+          selectedCountry && !errorMsg && (
+            <div className="text-slate-600 text-sm">
+              اوپر اپنا شہر اور علاقہ درج کریں پھر "دریافت کریں" پر کلک کریں — نتائج نیچے ظاہر ہوں گے۔
+            </div>
+          )
+        )}
+      </div>
+
+      {/* Modal for selected halka */}
       <AnimatePresence>
         {showModal && selectedHalka && (
           <motion.div
@@ -447,7 +505,6 @@ export default function ApKaHalqa() {
             ref={dialogRef}
             className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4"
           >
-            {/* overlay */}
             <div
               className="absolute inset-0 bg-black/50 backdrop-blur-sm"
               onClick={() => setShowModal(false)}
@@ -473,9 +530,8 @@ export default function ApKaHalqa() {
                 </button>
               </div>
 
-              {/* content */}
+                            {/* content */}
               <div className="flex-1 overflow-y-auto">
-                {/* Image */}
                 <div className="h-44 sm:h-56 md:h-64">
                   <img
                     src={getImageForHalka(selectedHalka.id)}
@@ -484,45 +540,56 @@ export default function ApKaHalqa() {
                   />
                 </div>
 
-                {/* details */}
                 <div className="p-4 space-y-3 text-sm sm:text-base">
                   <div className="flex items-center gap-2 text-slate-700">
                     <Home className="w-4 h-4" />
-                    <span className="font-medium">ملک:</span> <span className="mr-2">{selectedCountry?.name}</span>
+                    <span className="font-medium">ملک:</span>{" "}
+                    <span className="mr-2">
+                      {countries.find((c) =>
+                        c.halkas.some((h) => h.id === selectedHalka.id)
+                      )?.name || ""}
+                    </span>
                   </div>
 
                   <div className="flex items-center gap-2 text-slate-700">
                     <MapPin className="w-4 h-4" />
-                    <span className="font-medium">مقام:</span> {selectedHalka.mapLocation}
+                    <span className="font-medium">مقام:</span>{" "}
+                    {selectedHalka.mapLocation}
                   </div>
 
                   <div className="flex items-center gap-2 text-slate-700">
                     <Phone className="w-4 h-4" />
-                    <span className="font-medium">رابطہ:</span> {selectedHalka.contact || "ن/ا"}
+                    <span className="font-medium">رابطہ:</span>{" "}
+                    {selectedHalka.contact || "ن/ا"}
                   </div>
 
                   <div className="flex items-center gap-2 text-slate-700">
                     <Clock className="w-4 h-4" />
-                    <span className="font-medium">اوقاتِ ملاقات:</span> {selectedHalka.timing}
+                    <span className="font-medium">اوقاتِ ملاقات:</span>{" "}
+                    {selectedHalka.timing}
                   </div>
 
                   <div className="flex items-center gap-2 text-slate-700">
                     <User className="w-4 h-4" />
-                    <span className="font-medium">امیر:</span> {selectedHalka.ameer}
+                    <span className="font-medium">امیر:</span>{" "}
+                    {selectedHalka.ameer}
                   </div>
 
                   {selectedHalka.notes && (
-                    <p className="text-slate-600"><strong>نوٹس:</strong> {selectedHalka.notes}</p>
+                    <p className="text-slate-600">
+                      <strong>نوٹس:</strong> {selectedHalka.notes}
+                    </p>
                   )}
 
-                  {/* cities & towns (expandable list) */}
                   <div>
                     <h4 className="font-semibold mb-2">شہروں اور علاقوں کی تفصیل:</h4>
                     <div className="space-y-3">
                       {selectedHalka.cities.map((ct) => (
                         <div key={ct.id} className="p-3 bg-gray-50 rounded-lg">
                           <div className="flex items-center justify-between">
-                            <div className="font-medium text-slate-800">{ct.name}</div>
+                            <div className="font-medium text-slate-800">
+                              {ct.name}
+                            </div>
                           </div>
                           <div className="mt-2 text-slate-600">
                             <strong>علاقے:</strong> {ct.towns.join("، ")}
@@ -532,10 +599,12 @@ export default function ApKaHalqa() {
                     </div>
                   </div>
 
-                  {/* map */}
                   <div className="mt-3 h-56 w-full border rounded-md overflow-hidden">
                     <iframe
-                      src={googleMapsSrc(selectedHalka.marker.lat, selectedHalka.marker.lng)}
+                      src={googleMapsSrc(
+                        selectedHalka.marker.lat,
+                        selectedHalka.marker.lng
+                      )}
                       className="w-full h-full border-0"
                       loading="lazy"
                       title={`${selectedHalka.name} نقشہ`}
@@ -548,7 +617,10 @@ export default function ApKaHalqa() {
               <div className="flex flex-col sm:flex-row gap-3 p-4 border-t bg-gray-50">
                 <button
                   onClick={() =>
-                    openDirections(selectedHalka.marker.lat, selectedHalka.marker.lng)
+                    openDirections(
+                      selectedHalka.marker.lat,
+                      selectedHalka.marker.lng
+                    )
                   }
                   className="flex-1 px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition"
                 >
@@ -565,6 +637,14 @@ export default function ApKaHalqa() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* helper note */}
+      <div className="max-w-3xl mx-auto mt-6 text-slate-500 text-sm">
+        <p>
+          نوٹ: یہ تلاش لفظی مماثلت کی بنیاد پر ہے — اگر آپ کا شہر یا علاقہ بالکل اسی
+          رسمِ املاء میں نہ ملا تو قریبی یا جزوی نام آزما کر دیکھیں۔
+        </p>
+      </div>
     </div>
   );
 }
